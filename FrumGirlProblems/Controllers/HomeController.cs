@@ -29,6 +29,12 @@ namespace FrumGirlProblems.Controllers
             return View();
         }
 
+        public IActionResult Boss()
+        {
+            return View();
+           // return Json("You're a boss");
+        }
+
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
