@@ -10,6 +10,10 @@
     padding-right: 15px;
 }
 
+#navbar {
+    background-color: #702963;
+}
+
 /* Carousel */
 .carousel-caption p {
     font-size: 20px;
