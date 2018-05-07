@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 
+
 namespace FrumGirlProblems
 {
     public class Startup
@@ -25,6 +26,7 @@ namespace FrumGirlProblems
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<IdentityDbContext>(opt => opt.UseInMemoryDatabase("Identities"));
+           
 
             services.AddIdentity<IdentityUser, IdentityRole>(options =>
             {
@@ -33,12 +35,31 @@ namespace FrumGirlProblems
                 options.Password.RequireLowercase = false;
                 options.Password.RequireUppercase = false;
             })
-
-
-                .AddEntityFrameworkStores<IdentityDbContext>()
+            .AddEntityFrameworkStores<IdentityDbContext>()
                 .AddDefaultTokenProviders();
+
+            
+
+             services.ConfigureApplicationCookie(options =>
+             {
+                 // Cookie settings
+                 options.Cookie.HttpOnly = true;
+                 options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+                 // If the LoginPath isn't set, ASP.NET Core defaults 
+                 // the path to /Account/Login.
+                 options.LoginPath = "/Account/Login";
+                 // If the AccessDeniedPath isn't set, ASP.NET Core defaults 
+                 // the path to /Account/AccessDenied.
+                 options.AccessDeniedPath = "/Account/AccessDenied";
+                 options.SlidingExpiration = true;
+             });
+
+
             services.AddMvc();
+
         }
+
+       
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

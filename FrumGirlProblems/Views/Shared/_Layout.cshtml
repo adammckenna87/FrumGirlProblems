@@ -6,7 +6,7 @@
     <title>@ViewData["Title"] - FrumGirlProblems</title>
 
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-    <!--  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.1/minty/bootstrap.min.css" /> -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.1/minty/bootstrap.min.css" /> 
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
@@ -25,17 +25,20 @@
                     <a class="nav-link" asp-controller="Product" asp-action="Index">Shop</a>
                 </li>
                 @if (!User.Identity.IsAuthenticated)
-                 {
+    {
             <li class="nav-item">
-                <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Register">Sign Up</a>
+                <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
             </li>
-                 }
+            <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-controller="Account" asp-action="SignIn">Sign In</a>
+            </li>
+}
 else
-                 {
+{
             <li class="nav-item">
                 <a class="nav-link">Sign Out as @User.Identity.Name</a>
             </li>
-                   }
+}
 
             </ul>
         </div>
