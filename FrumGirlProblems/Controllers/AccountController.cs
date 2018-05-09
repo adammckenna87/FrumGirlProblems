@@ -13,7 +13,6 @@ namespace FrumGirlProblems.Controllers
         public AccountController(SignInManager<IdentityUser> signInManager)
         {
             this._signInManager = signInManager;
-           
         }
 
         public IActionResult Index()
@@ -27,47 +26,6 @@ namespace FrumGirlProblems.Controllers
             return View();
         }
 
-        public IActionResult SignOut()
-        {
-            this._signInManager.SignOutAsync().Wait();
-            return View("Index", "Home");
-        }
-
-        public IActionResult SignIn()
-        {
-            return View();
-        }
-        /*
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SignIn(Models.SignInViewModel model, string returnUrl = null)
-        {
-            ViewData["ReturnUrl"] = returnUrl;
-            if (ModelState.IsValid)
-            {
-                // This doesn't count login failures towards account lockout
-                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(model.email,
-                    model.password, model.RememberMe, lockoutOnFailure: false);
-                if (result.Succeeded)
-                {
-                    _logger.LogInformation(1, "User logged in.");
-                    return RedirectToLocal(returnUrl);
-                }
-            
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    return View(model);
-                }
-            }
-
-            // If we got this far, something failed, redisplay form
-            return View(model);
-        }
-        */
-
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Register(Models.RegisterViewModel model)
@@ -80,9 +38,14 @@ namespace FrumGirlProblems.Controllers
                 IdentityResult creationResult = this._signInManager.UserManager.CreateAsync(newUser).Result;
                 if (creationResult.Succeeded)
                 {
-                    //TODO: Create an account and log this user in;
-                    return RedirectToAction("Index", "Home");
-                }
+
+                    IdentityResult passwordResult = this._signInManager.UserManager.AddPasswordAsync(newUser, model.password).Result;
+                    if (passwordResult.Succeeded)
+                    {
+                        this._signInManager.SignInAsync(newUser, false).Wait();
+                        return RedirectToAction("Index", "Home");
+                    }
+                
                 else
                 {
                     foreach (var error in creationResult.Errors)
@@ -91,10 +54,58 @@ namespace FrumGirlProblems.Controllers
                     }
                 }
             }
-            return View();
-
-
-        
+                else
+            {
+                foreach (var error in creationResult.Errors)
+                {
+                    ModelState.AddModelError(error.Code, error.Description);
+                }
+            }
         }
+            return View();
+        }
+
+
+        public IActionResult SignOut()
+        {
+            this._signInManager.SignOutAsync().Wait();
+            return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult SignIn()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SignIn(Models.SignInViewModel model)
+        {
+
+            if (ModelState.IsValid)
+            {
+                IdentityUser existingUser = this._signInManager.UserManager.FindByNameAsync(model.email).Result;
+                if (existingUser != null)
+                {
+                    Microsoft.AspNetCore.Identity.SignInResult passwordResult = this._signInManager.CheckPasswordSignInAsync(existingUser, model.password, false).Result;
+                    if (passwordResult.Succeeded)
+                    {
+                        this._signInManager.SignInAsync(existingUser, false).Wait();
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("PasswordIncorrect", "Username or Password is incorrect.");
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("UserDoesNotExist", "Username or Password is incorrect.");
+
+                }
+            }
+            return View();
+        }
+
     }
 }

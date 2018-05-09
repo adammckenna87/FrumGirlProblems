@@ -25,20 +25,20 @@
                     <a class="nav-link" asp-controller="Product" asp-action="Index">Shop</a>
                 </li>
                 @if (!User.Identity.IsAuthenticated)
-    {
+                {
             <li class="nav-item">
                 <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" asp-area="" asp-controller="Account" asp-action="SignIn">Sign In</a>
             </li>
-}
-else
-{
+                 }
+                else
+                {
             <li class="nav-item">
                 <a class="nav-link">Sign Out as @User.Identity.Name</a>
             </li>
-}
+                }
 
             </ul>
         </div>
