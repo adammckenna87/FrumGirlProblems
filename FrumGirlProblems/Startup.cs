@@ -25,7 +25,11 @@ namespace FrumGirlProblems
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<IdentityDbContext>(opt => opt.UseInMemoryDatabase("Identities"));
+
+
+            string tcpConnectionString = Configuration.GetConnectionString("TCP");
+
+            services.AddDbContext<Models.TCPDbContext>(opt => opt.UseSqlServer(tcpConnectionString));
            
 
             services.AddIdentity<IdentityUser, IdentityRole>(options =>
@@ -35,7 +39,7 @@ namespace FrumGirlProblems
                 options.Password.RequireLowercase = false;
                 options.Password.RequireUppercase = false;
             })
-            .AddEntityFrameworkStores<IdentityDbContext>()
+            .AddEntityFrameworkStores<Models.TCPDbContext>()
                 .AddDefaultTokenProviders();
 
             

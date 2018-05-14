@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FrumGirlProblems.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,8 +10,8 @@ namespace FrumGirlProblems.Controllers
 {
     public class AccountController : Controller
     {
-        SignInManager<IdentityUser> _signInManager;
-        public AccountController(SignInManager<IdentityUser> signInManager)
+        SignInManager<TCPUser> _signInManager;
+        public AccountController(SignInManager<TCPUser> signInManager)
         {
             this._signInManager = signInManager;
         }
@@ -33,7 +34,7 @@ namespace FrumGirlProblems.Controllers
 
             if (ModelState.IsValid)
             {
-                IdentityUser newUser = new IdentityUser(model.email);
+                TCPUser newUser = new TCPUser { Email = model.email };
 
                 IdentityResult creationResult = this._signInManager.UserManager.CreateAsync(newUser).Result;
                 if (creationResult.Succeeded)
@@ -84,7 +85,7 @@ namespace FrumGirlProblems.Controllers
 
             if (ModelState.IsValid)
             {
-                IdentityUser existingUser = this._signInManager.UserManager.FindByNameAsync(model.email).Result;
+                TCPUser existingUser = this._signInManager.UserManager.FindByNameAsync(model.email).Result;
                 if (existingUser != null)
                 {
                     Microsoft.AspNetCore.Identity.SignInResult passwordResult = this._signInManager.CheckPasswordSignInAsync(existingUser, model.password, false).Result;
