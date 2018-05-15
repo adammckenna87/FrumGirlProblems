@@ -10,19 +10,30 @@ namespace FrumGirlProblems.Models
 {
     public class TCPDbContext : IdentityDbContext<TCPUser>
     {
+
+        public TCPDbContext() : base()
+        {
+
+        }
+
         public TCPDbContext(DbContextOptions options) : base(options)
         {
 
         }
 
-        protected TCPDbContext()
-        {
-
-        }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<TestEntity> TestEntities { get; set; }
     }
 
     public class TCPUser : IdentityUser
     {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+    }
 
+    public class TestEntity
+    {
+        public int id { get; set; }
+        public string MyProperty { get; set; }
     }
 }

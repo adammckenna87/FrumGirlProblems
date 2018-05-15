@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
-
+using FrumGirlProblems.Models;
 
 namespace FrumGirlProblems
 {
@@ -32,7 +32,7 @@ namespace FrumGirlProblems
             services.AddDbContext<Models.TCPDbContext>(opt => opt.UseSqlServer(tcpConnectionString));
            
 
-            services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            services.AddIdentity<TCPUser, IdentityRole>(options =>
             {
                 options.Password.RequireDigit = false;
                 options.Password.RequireNonAlphanumeric = false;

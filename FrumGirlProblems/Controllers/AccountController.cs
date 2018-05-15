@@ -34,7 +34,10 @@ namespace FrumGirlProblems.Controllers
 
             if (ModelState.IsValid)
             {
-                TCPUser newUser = new TCPUser { Email = model.email };
+                TCPUser newUser = new TCPUser {
+                    Email = model.email,
+                    UserName = model.userName
+                };
 
                 IdentityResult creationResult = this._signInManager.UserManager.CreateAsync(newUser).Result;
                 if (creationResult.Succeeded)

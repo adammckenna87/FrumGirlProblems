@@ -11,14 +11,15 @@
         <img class="img-fluid" src="@Model.Image" alt="@Model.Name" />
         <p>@Model.Description</p>
         <h4>@(Model.Price.HasValue ? Model.Price.Value.ToString("C") : "No Price")</h4>
-        <div>
+
+        <!-- <div>
             <b>Sizes Available:</b> @foreach (var size in Model.Sizes)
     {
-             <p>@size</p>  
+             <p>@size</p>
     }
         </div>
-        
-        
+
+        -->
 
 
     </div>

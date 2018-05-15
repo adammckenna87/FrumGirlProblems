@@ -1,29 +1,47 @@
-﻿
+﻿@model RegisterViewModel
 @{
     ViewData["Title"] = "Register";
 }
 
 <h2 class="mt-5">Register</h2>
-@if(!ViewData.ModelState.IsValid)
+@if (!ViewData.ModelState.IsValid)
 {
-<div class="alert-danger">
-    <ul>
-        @foreach(var error in ViewData.ModelState.Values.SelectMany(m => m.Errors))
+    <div class="alert-danger">
+        <ul>
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(m => m.Errors))
             {
-        <li>@error.ErrorMessage</li>
+                <li>@error.ErrorMessage</li>
             }
-    </ul>
-</div>
+        </ul>
+    </div>
 }
-<form method="Post" asp-action="Register" asp-controller="Account">
-    <div class="form-group">
-        <label for="exampleInputEmail1">Email address</label>
-        <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-    </div>
-    <div class="form-group">
-        <label for="exampleInputPassword1">Password</label>
-        <input name="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" />
-    </div>
-    <input type="submit" class="btn btn-primary" value="Sign up!" />
-</form>
+    <form method="Post" asp-action="Register" asp-controller="Account">
+        
+        <div class="form-group">
+            <label asp-for="userName"></label>
+            <input asp-for="userName" class="form-control" type="text" placeholder="Enter your user name" required />
+        </div>
+        <div class="form-group">
+            <label asp-for="firstName"></label>
+            <input asp-for="firstName" class="form-control" type="text" placeholder="Enter your first name" required />
+        </div>
+        <div class="form-group">
+            <label asp-for="lastName"></label>
+            <input asp-for="lastName" class="form-control" type="text" placeholder="Enter your last name" required />
+        </div>
+        <div class="form-group">
+            <label asp-for="phoneNumber"></label>
+            <input asp-for="phoneNumber" class="form-control" type="tel" placeholder="Enter your telephone number" required />
+        </div>
+        <div class="form-group">
+            <label asp-for="email"></label>
+            <input asp-for="email" class="form-control" type="email" placeholder="Enter your email" required />
+        </div>
+        <div class="form-group">
+            <label asp-for="password"></label>
+            <input asp-for="password" class="form-control" type="password" placeholder="Enter your Password" required />
+        </div>
+        <input type="submit" class="btn btn-primary" value="Sign Up" />
+    </form>
+
+
