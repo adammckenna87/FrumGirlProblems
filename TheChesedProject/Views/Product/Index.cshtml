@@ -9,13 +9,17 @@
 <div class="row">
     @foreach (var product in Model)
     {
-    <div class="col-sm-12 col-md-6">
-        <h3>@product.Name</h3>
-        <img class="img-fluid" src="@product.Image" alt="@product.Name" />
-        <p>@product.Description</p>
-        <h4>@(product.Price.HasValue ? product.Price.Value.ToString("C") : "No Price")</h4>
-        <a class="btn btn-dark" asp-controller="Product" asp-action="Details" asp-route-id="@product.ID">View this product</a>
-    </div>
-
+        <div class="col-sm-12 col-md-6">
+            <h3>@product.Name</h3>
+            <img class="img-fluid" src="@product.Image" alt="@product.Name" />
+            <p>@product.Description</p>
+            <h4>@(product.Price.HasValue ? product.Price.Value.ToString("C") : "No Price")</h4>
+            <a class="btn btn-danger" asp-controller="Product" asp-action="Details" asp-route-id="@product.ID">View this product</a>
+            <form method="post" asp-action="AddToCart">
+                <input name="ID" value="@product.ID" type="hidden" />
+                <input type="submit" class="btn btn-warning" value="Add to Cart" asp-action="AddToCart" />
+            </form>
+        </div>
+        
     }
 </div>

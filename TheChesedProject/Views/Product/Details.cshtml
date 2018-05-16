@@ -12,6 +12,11 @@
         <p>@Model.Description</p>
         <h4>@(Model.Price.HasValue ? Model.Price.Value.ToString("C") : "No Price")</h4>
 
+        <form method="post">
+            <input asp-for="ID" type="hidden" />
+            <input type="submit" class="btn btn-warning" value="Add to Cart" />
+        </form>
+
         <!-- <div>
             <b>Sizes Available:</b> @foreach (var size in Model.Sizes)
     {

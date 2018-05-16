@@ -1,4 +1,8 @@
-﻿
+﻿.jumbotron img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
 
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
@@ -7,10 +11,7 @@
     padding-right: 15px;
 }
 
-#nb {
-    background-color: #702963;
-    justify-content:space-between;
-}
+
 
 /* Carousel */
 .carousel-caption p {

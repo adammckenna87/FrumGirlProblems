@@ -11,9 +11,10 @@ using TheChesedProject.Models;
 namespace TheChesedProject.Migrations
 {
     [DbContext(typeof(TCPDbContext))]
-    partial class TCPDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180516143115_Gemachs")]
+    partial class Gemachs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -126,40 +127,6 @@ namespace TheChesedProject.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("TheChesedProject.Models.Cart", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<Guid>("CookieIdentifier");
-
-                    b.Property<DateTime>("LastModified");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Carts");
-                });
-
-            modelBuilder.Entity("TheChesedProject.Models.CartItem", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int?>("CartID");
-
-                    b.Property<int?>("ProductID");
-
-                    b.Property<int>("Quantity");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("CartID");
-
-                    b.HasIndex("ProductID");
-
-                    b.ToTable("CartItem");
                 });
 
             modelBuilder.Entity("TheChesedProject.Models.Gemach", b =>
@@ -316,17 +283,6 @@ namespace TheChesedProject.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("TheChesedProject.Models.CartItem", b =>
-                {
-                    b.HasOne("TheChesedProject.Models.Cart", "Cart")
-                        .WithMany("CartItems")
-                        .HasForeignKey("CartID");
-
-                    b.HasOne("TheChesedProject.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductID");
                 });
 #pragma warning restore 612, 618
         }

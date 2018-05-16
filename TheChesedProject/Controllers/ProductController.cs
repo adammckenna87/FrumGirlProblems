@@ -45,7 +45,36 @@ namespace TheChesedProject.Controllers
 
             return View(product);
         }
-        
+
+        [HttpPost]
+        public IActionResult AddToCart(int id, int quantity)
+        {
+            Guid cartId;
+            Cart cart = null;
+            if (Request.Cookies.ContainsKey("cartId"))
+            {
+                if (Guid.TryParse(Request.Cookies["cartId"], out cartId))
+                {
+                    cart = _context.Carts.FirstOrDefault(x => x.CookieIdentifier == cartId);
+                }
+            }
+
+            if (cart == null)
+            {
+                cart = new Cart();
+                cartId = Guid.NewGuid();
+                cart.CookieIdentifier = cartId;
+
+                _context.Carts.Add(cart);
+                Response.Cookies.Append("cartId", cartId.ToString(), new Microsoft.AspNetCore.Http.CookieOptions { Expires = DateTime.MaxValue });
+
+            }
+
+            cart.LastModified = DateTime.Now;
+
+            _context.SaveChanges();
+            return Ok();
         }
+    }
     }
 
