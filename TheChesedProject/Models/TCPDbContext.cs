@@ -20,7 +20,8 @@ namespace TheChesedProject.Models
         {
 
         }
-        
+
+        public DbSet<CartItem> CartItems { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<Gemach> Gemachs { get; set; }
         public DbSet<Product> Products { get; set; }
@@ -60,8 +61,6 @@ namespace TheChesedProject.Models
         public Cart Cart { get; set; }
         public Product Product { get; set; }
         public int Quantity { get; set; }
-
-
     }
 
 

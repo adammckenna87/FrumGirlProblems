@@ -13,7 +13,7 @@ namespace TheChesedProject.Controllers
     {
 
         private readonly TCPDbContext _context;
-        private readonly IHostingEnvironment _env;
+        private   IHostingEnvironment _env;
 
         public ProductController(TCPDbContext context, IHostingEnvironment env)
         {
@@ -47,7 +47,7 @@ namespace TheChesedProject.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddToCart(int id, int quantity)
+        public IActionResult AddToCart(int id, int quantity = 1)
         {
             Guid cartId;
             Cart cart = null;
@@ -55,7 +55,11 @@ namespace TheChesedProject.Controllers
             {
                 if (Guid.TryParse(Request.Cookies["cartId"], out cartId))
                 {
-                    cart = _context.Carts.FirstOrDefault(x => x.CookieIdentifier == cartId);
+                    //https://docs.microsoft.com/en-us/ef/core/querying/related-data
+                    cart = _context.Carts
+                        .Include(carts => carts.CartItems)
+                        .ThenInclude(cartitems => cartitems.Product)
+                        .FirstOrDefault(x => x.CookieIdentifier == cartId);
                 }
             }
 
@@ -66,14 +70,22 @@ namespace TheChesedProject.Controllers
                 cart.CookieIdentifier = cartId;
 
                 _context.Carts.Add(cart);
-                Response.Cookies.Append("cartId", cartId.ToString(), new Microsoft.AspNetCore.Http.CookieOptions { Expires = DateTime.MaxValue });
+                Response.Cookies.Append("cartId", cartId.ToString(), new Microsoft.AspNetCore.Http.CookieOptions { Expires = DateTime.UtcNow.AddYears(100) });
 
             }
+            CartItem item = cart.CartItems.FirstOrDefault(x => x.Product.ID == id);
+            if (item == null)
+            {
+                item = new CartItem();
+                item.Product = _context.Products.Find(id);
+                cart.CartItems.Add(item);
+            }
 
+            item.Quantity += quantity;
             cart.LastModified = DateTime.Now;
 
             _context.SaveChanges();
-            return Ok();
+            return RedirectToAction("Index", "Cart");
         }
     }
     }
