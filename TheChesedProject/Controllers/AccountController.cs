@@ -5,15 +5,19 @@ using System.Threading.Tasks;
 using TheChesedProject.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using SendGrid.Core;
 
 namespace TheChesedProject.Controllers
 {
     public class AccountController : Controller
     {
+       // private SendGridClient _sendGridClient;
+
         SignInManager<TCPUser> _signInManager;
-        public AccountController(SignInManager<TCPUser> signInManager)
+        public AccountController(SignInManager<TCPUser> signInManager)//, SendGrid.SendGridClient sendGridClient)
         {
             this._signInManager = signInManager;
+            //this._sendGridClient = sendGridClient;
         }
 
         public IActionResult Index()
@@ -31,7 +35,15 @@ namespace TheChesedProject.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Register(Models.RegisterViewModel model)
         {
-
+            /*
+            SendGrid.SendGridClient sendGridClient = new SendGrid.SendGridClient("api_key");
+            SendGrid.Helpers.Mail.SendGridMessage message = new SendGrid.Helpers.Mail.SendGridMessage();
+            message.AddTo(username);
+            message.Subject = "Welcome to Alpaca Store";
+            message.SetFrom("alpacaadmin@codingtemple.com");
+            message.AddContent("text/plain", "Thanks for registering as " + username + " on AlpacaStore!");
+            await sendGridClient.SendEmailAsync(message);
+            */
             if (ModelState.IsValid)
             {
                 TCPUser newUser = new TCPUser {

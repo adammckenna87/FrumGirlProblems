@@ -10,6 +10,9 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using TheChesedProject.Models;
+using SendGrid.Core;
+using Newtonsoft.Json.Serialization;
+
 
 namespace TheChesedProject
 {
@@ -57,9 +60,25 @@ namespace TheChesedProject
                  options.AccessDeniedPath = "/Account/AccessDenied";
                  options.SlidingExpiration = true;
              });
+            /*
+            services.AddTransient<SendGrid.SendGridClient>((x) =>
+            {
+                return new SendGrid.SendGridClient("api_key_here");
+            });
 
-
-            services.AddMvc();
+            services.AddTransient<SendGrid.SendGridClient>((x) =>
+            {
+                return new SendGrid.SendGridClient(Configuration["sendgrid"]);
+            });
+            */
+            services
+                .AddMvc()
+                .AddJsonOptions(
+                    o =>
+                    {
+                        o.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                        o.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                    });
 
         }
 

@@ -21,6 +21,8 @@ namespace TheChesedProject.Models
 
         }
 
+        public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<Order> Orders { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<Gemach> Gemachs { get; set; }
@@ -62,7 +64,37 @@ namespace TheChesedProject.Models
         public Product Product { get; set; }
         public int Quantity { get; set; }
     }
+    
+    public class Order
+    {
+        public Order()
+        {
+            this.OrderItems = new HashSet<OrderItem>();
+        }
 
+        public int ID { get; set; }
+        public Guid CookieIdentifier { get; set; }
+        public DateTime LastModified { get; set; }
+        public ICollection<OrderItem> OrderItems { get; set; }
+        public string firstName { get; set; }
+        public string lastName { get; set; }
+        public string BillingAddress { get; set; }
+        public string ShippingAddress { get; set; }
+        public string PaymentInfo { get; set; }
+        public string phoneNumber { get; set; }
+    }
+
+    public class OrderItem 
+    {
+
+        public int ID { get; set; }
+        public Cart Cart { get; set; }
+        public Product Product { get; set; }
+        public int Quantity { get; set; }
+
+    }
+
+    
 
     public class TCPUser : IdentityUser
     {
