@@ -11,9 +11,10 @@ using TheChesedProject.Models;
 namespace TheChesedProject.Migrations
 {
     [DbContext(typeof(TCPDbContext))]
-    partial class TCPDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180522180244_OrderDetails")]
+    partial class OrderDetails
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

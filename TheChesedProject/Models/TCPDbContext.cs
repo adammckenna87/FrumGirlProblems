@@ -36,10 +36,11 @@ namespace TheChesedProject.Models
         public string Category { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public string Conditions { get; set; }
         public string Address { get; set; }
         public string Image { get; set; }
         public string PhoneNumber { get; set; }
-        public int  TimeOpen { get; set; }
+        public int timeOpen { get; set; }
         public int TimeClose { get; set; }
     }
 
@@ -73,25 +74,32 @@ namespace TheChesedProject.Models
         }
 
         public int ID { get; set; }
-        public Guid CookieIdentifier { get; set; }
-        public DateTime LastModified { get; set; }
+        public DateTime OrderDate { get; set; }
         public ICollection<OrderItem> OrderItems { get; set; }
         public string firstName { get; set; }
         public string lastName { get; set; }
+        public string phoneNumber { get; set; }
+        public string TrackingNumber { get; set; }
         public string BillingAddress { get; set; }
         public string ShippingAddress { get; set; }
-        public string PaymentInfo { get; set; }
-        public string phoneNumber { get; set; }
+        public string State { get; set; }
+        public string Locale { get; set; }
+        public string PostalCode { get; set; }
+        public string Region { get; set; }
+        public string Email { get; set; }
+        public string Country { get; set; }
     }
 
     public class OrderItem 
     {
 
         public int ID { get; set; }
-        public Cart Cart { get; set; }
+        public Order Cart { get; set; }
         public Product Product { get; set; }
         public int Quantity { get; set; }
-
+        public int ProductID { get; internal set; }
+        public string ProductName { get; internal set; }
+        public decimal ProductPrice { get; internal set; }
     }
 
     

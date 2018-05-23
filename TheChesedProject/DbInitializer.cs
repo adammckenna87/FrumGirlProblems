@@ -9,7 +9,7 @@ namespace TheChesedProject
     {
         internal static void Initialize(TCPDbContext db)
         {
-            //db.Database.Migrate();
+            db.Database.Migrate();
 
             if (db.Products.Count() == 0)
             {

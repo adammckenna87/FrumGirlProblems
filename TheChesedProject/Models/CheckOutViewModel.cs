@@ -9,6 +9,9 @@ namespace TheChesedProject.Models
     public class CheckOutViewModel
     {
 
+        public Cart Cart { get; set; }
+
+
         [Required]
         [Display(Name = "First Name")]
         public string firstName { get; set; }
@@ -34,10 +37,7 @@ namespace TheChesedProject.Models
         [Display(Name = "Address Line 2")]
         public string ShippingAddressLine2 { get; set; }
 
-        [Required]
-        [Display(Name = "Zipcode")]
-        public string ShippingZip { get; set; }
-
+       
         [Required]
         [Display(Name = "Address Line 1")]
         public string BillingAddressLine1 { get; set; }
@@ -55,6 +55,22 @@ namespace TheChesedProject.Models
         public string State { get; set; }
 
         [Required]
+        [Display(Name = "Zipcode")]
+        public string Zipcode { get; set; }
+
+        [Required]
+        [Display(Name = "Country")]
+        public string ShippingCountry { get; set; }
+
+        
+        [Display(Name = "Locale")]
+        public string ShippingLocale { get; set; }
+
+        
+        [Display(Name = "Region")]
+        public string ShippingRegion { get; set; }
+
+        [Required]
         [Display(Name = "Name On Card")]
         public string NameOnCard { get; set; }
 
@@ -63,17 +79,17 @@ namespace TheChesedProject.Models
         public string CardNumber { get; set; }
 
         [Required]
-        [Display(Name = "Expiry")]
-        public string ExpirationDate { get; set; }
+        [Display(Name = "Expiry Month")]
+        public string BillingCardExpirationMonth { get; set; }
+
+        [Required]
+        [Display(Name = "Expiry Year")]
+        public string BillingCardExpirationYear { get; set; }
 
         [Required]
         [Display(Name = "CVV")]
         public string CVV { get; set; }
 
-        [Required]
-        [Display(Name = "Zipcode")]
-        public string Zipcode { get; set; }
-
-
+       
     }
 }

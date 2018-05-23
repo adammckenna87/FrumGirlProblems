@@ -10,8 +10,9 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using TheChesedProject.Models;
-using SendGrid.Core;
+using SendGrid;
 using Newtonsoft.Json.Serialization;
+using Braintree;
 
 
 namespace TheChesedProject
@@ -80,6 +81,16 @@ namespace TheChesedProject
                         o.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                     });
 
+           services.AddTransient((x) => { return new EmailService(Configuration["SendGridKey"]); });
+
+            
+            services.AddTransient((x) => {
+                return new Braintree.BraintreeGateway(
+                    Configuration["BraintreeEnvironment"],
+                    Configuration["BraintreeMerchantId"],
+                    Configuration["BraintreePublicKey"],
+                    Configuration["BraintreePrivateKey"]);
+            });
         }
 
        
