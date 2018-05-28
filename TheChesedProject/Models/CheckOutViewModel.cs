@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Braintree;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -48,15 +49,15 @@ namespace TheChesedProject.Models
 
         [Required]
         [Display(Name = "City")]
-        public string City { get; set; }
+        public string ShippingCity { get; set; }
 
         [Required]
         [Display(Name = "State")]
-        public string State { get; set; }
+        public string ShippingState { get; set; }
 
         [Required]
         [Display(Name = "Zipcode")]
-        public string Zipcode { get; set; }
+        public string ShippingZipcode { get; set; }
 
         [Required]
         [Display(Name = "Country")]
@@ -90,6 +91,16 @@ namespace TheChesedProject.Models
         [Display(Name = "CVV")]
         public string CVV { get; set; }
 
-       
+        [Display(Name = "Save Credit Card")]
+        public bool SaveBillingCard { get; set; }
+
+        [Display(Name = "Save Shipping Address")]
+        public bool SaveShippingAddress { get; set; }
+        public CreditCard[] CreditCards { get; set; }
+        public Address[] Addresses { get; set; }
+
+        public string SavedAddressId { get; set; }
+
+
     }
 }

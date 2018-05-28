@@ -16,22 +16,39 @@ namespace TheChesedProject.Controllers
         private SignInManager<TCPUser> _signInManager;
         private BraintreeGateway _brainTreeGateway;
         private SmartyStreets.USStreetApi.Client _usStreetApiClient;
+        private EmailService _emailService;
 
         public CheckOutController(TCPDbContext context, 
             SignInManager<TCPUser> signInManager,
             Braintree.BraintreeGateway braintreeGateway,
+            EmailService emailService,
             SmartyStreets.USStreetApi.Client usStreetApiClient)
         {
             this._context = context;
             this._signInManager = signInManager;
             this._brainTreeGateway = braintreeGateway;
             this._usStreetApiClient = usStreetApiClient;
+            this._emailService = emailService;
         }
 
         public async Task<IActionResult> Index()
         {
             CheckOutViewModel model = new CheckOutViewModel();
             await GetCurrentCart(model);
+
+            if (User.Identity.IsAuthenticated)
+            {
+                TCPUser currentUser = await _signInManager.UserManager.GetUserAsync(User);
+                Braintree.CustomerSearchRequest search = new Braintree.CustomerSearchRequest();
+                search.Email.Is(currentUser.Email);
+                var searchResult = await _brainTreeGateway.Customer.SearchAsync(search);
+                if (searchResult.Ids.Count > 0)
+                {
+                    Braintree.Customer customer = searchResult.FirstItem;
+                    model.CreditCards = customer.CreditCards;
+                    model.Addresses = customer.Addresses;
+                }
+            }
             if (model.Cart == null)
             {
                 return RedirectToAction("Index", "Home");
@@ -70,6 +87,7 @@ namespace TheChesedProject.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(CheckOutViewModel model)
         {
+
             await GetCurrentCart(model);
 
             if (ModelState.IsValid)
@@ -87,12 +105,12 @@ namespace TheChesedProject.Controllers
                     }).ToArray(),
                     BillingAddress = model.BillingAddressLine1 + model.BillingAddressLine2,
                     ShippingAddress = model.ShippingAddressLine1 + model.ShippingAddressLine2,
-                    State = model.State,
+                    State = model.ShippingState,
                     Country = model.ShippingCountry,
                     Email = model.email,
                     phoneNumber = model.phoneNumber,
                     Locale = model.ShippingLocale,
-                    PostalCode = model.Zipcode,
+                    PostalCode = model.ShippingZipcode,
                     Region = model.ShippingRegion
 
                 };

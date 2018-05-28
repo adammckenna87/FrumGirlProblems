@@ -63,20 +63,38 @@
                     <input asp-for="phoneNumber" class="form-control" type="tel" placeholder="Enter your telephone number" required />
                 </div>
                 <div class="form-group">
-                    <label asp-for="BillingAddressLine1"></label>
+                    @if (User.Identity.IsAuthenticated)
+    {
+                @foreach (var savedAddress in Model.Addresses)
+{
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" asp-for="SavedAddressId" value="@savedAddress.Id">
+                    <label class="form-check-label" asp-for="SavedAddressId">
+                        @savedAddress.StreetAddress @savedAddress.ExtendedAddress @savedAddress.Locality @savedAddress.Region @savedAddress.PostalCode
+                    </label>
+                </div>
+}
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" asp-for="SavedAddressId" value="" checked>
+                    <label class="form-check-label" asp-for="SavedAddressId">
+                        New Address:
+                    </label>
+                </div>
+}
+                    <label asp-for="ShippingAddressLine1"></label>
                     <input type="text" class="form-control" id="inputAddress1" placeholder="Apartment, studio, or floor">
                 </div>
                 <div class="form-group">
-                    <label asp-for="BillingAddressLine2"></label>
+                    <label asp-for="ShippingAddressLine2"></label>
                     <input type="text" class="form-control" id="inputAddress2" placeholder="Street Name">
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <label asp-for="City"></label>
+                        <label asp-for="ShippingCity"></label>
                         <input type="text" class="form-control" id="inputCity">
                     </div>
                     <div class="form-group col-md-4">
-                        <label asp-for="State"></label>
+                        <label asp-for="ShippingState"></label>
                         <select id="inputState" class="form-control">
                             <option selected>Choose...</option>
                             <option value="AL">Alabama</option>
@@ -133,9 +151,18 @@
                         </select>
                     </div>
                     <div class="form-group col-md-2">
-                        <label asp-for="Zipcode"></label>
+                        <label asp-for="ShippingZipcode"></label>
                         <input type="text" class="form-control" id="inputZip">
                     </div>
+                    @if (User.Identity.IsAuthenticated)
+    {
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" asp-for="SaveShippingAddress">
+                    <label class="form-check-label" asp-for="SaveShippingAddress">
+                    </label>
+                </div>
+}
+                    <button class="btn btn-secondary" type="button" id="validateButton">Validate Address</button>
                 </div>
             </div>
 
@@ -198,11 +225,19 @@
                     <select asp-for="BillingCardExpirationYear" class="form-control col" required>
                         <option></option>
                         @for (int i = DateTime.Now.Year; i <= DateTime.Now.AddYears(6).Year; i++)
-                        {
-                            <option value="@i">@i.ToString()</option>
+        {
+                <option value="@i">@i.ToString()</option>
 
-                        }
+}
                     </select>
+                    @if (User.Identity.IsAuthenticated)
+    {
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" asp-for="SaveBillingCard">
+                    <label class="form-check-label" asp-for="SaveBillingCard">
+                    </label>
+                </div>
+}
                 </div>
                 <hr class="mb-4">
                 <button class="btn btn-warning btn-lg btn-block" type="submit">Continue to checkout</button>
@@ -213,6 +248,23 @@
 @section Scripts {
 <script type="text/javascript">
     $('document').ready(() => {
+
+        $('input[name=SavedAddressId]', '#checkout').change(() => {
+
+            if ($('input[name=SavedAddressId]:checked', '#checkout').val().length > 0) {
+                console.log('disable');
+                $('#shipping').find('input[type = text], input[type = checkbox], select').prop('disabled', true);
+
+            } else {
+
+                console.log('enable');
+                $('#shipping').find('input[type = text], input[type = checkbox], select').prop('disabled', false);
+            }
+
+
+        });
+
+
 $('#validateButton').click(() => {
             console.log("Validate clicked");
             var addressLine1 = $('#ShippingAddressLine1').val();
