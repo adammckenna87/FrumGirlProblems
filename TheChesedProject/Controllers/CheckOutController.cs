@@ -92,57 +92,157 @@ namespace TheChesedProject.Controllers
 
             if (ModelState.IsValid)
             {
-                Order newOrder = new Order
-                {
-                    TrackingNumber = Guid.NewGuid().ToString(),
-                    OrderDate = DateTime.Now,
-                    OrderItems = model.Cart.CartItems.Select(x => new OrderItem
-                    {
-                        ProductID = x.Product.ID,
-                        ProductName = x.Product.Name,
-                        ProductPrice = (x.Product.Price ?? 0),
-                        Quantity = x.Quantity
-                    }).ToArray(),
-                    BillingAddress = model.BillingAddressLine1 + model.BillingAddressLine2,
-                    ShippingAddress = model.ShippingAddressLine1 + model.ShippingAddressLine2,
-                    State = model.ShippingState,
-                    Country = model.ShippingCountry,
-                    Email = model.email,
-                    phoneNumber = model.phoneNumber,
-                    Locale = model.ShippingLocale,
-                    PostalCode = model.ShippingZipcode,
-                    Region = model.ShippingRegion
 
-                };
-
-                
-                TransactionRequest transaction = new TransactionRequest
+                if (!string.IsNullOrEmpty(model.SavedAddressId) ||
+                    (!string.IsNullOrEmpty(model.ShippingAddressLine1) && !string.IsNullOrEmpty(model.ShippingLocale)
+                    && !string.IsNullOrEmpty(model.ShippingRegion) && !string.IsNullOrEmpty(model.ShippingZipcode) && !string.IsNullOrEmpty(model.ShippingCountry)))
                 {
-                    //Amount = 1,
-                    Amount = model.Cart.CartItems.Sum(x => x.Quantity * (x.Product.Price ?? 0)),
-                    CreditCard = new TransactionCreditCardRequest
+
+                    Order newOrder = new Order
                     {
-                        Number = model.CardNumber,
-                        CardholderName = model.NameOnCard,
-                        CVV = model.CVV,
-                        ExpirationMonth = model.BillingCardExpirationMonth.ToString().PadLeft(2, '0'),
-                        ExpirationYear = model.BillingCardExpirationYear.ToString()
+                        TrackingNumber = Guid.NewGuid().ToString(),
+                        OrderDate = DateTime.Now,
+                        OrderItems = model.Cart.CartItems.Select(x => new OrderItem
+                        {
+                            ProductID = x.Product.ID,
+                            ProductName = x.Product.Name,
+                            ProductPrice = (x.Product.Price ?? 0),
+                            Quantity = x.Quantity
+                        }).ToArray(),
+                        BillingAddress = model.BillingAddressLine1 + model.BillingAddressLine2,
+                        ShippingAddress = model.ShippingAddressLine1 + model.ShippingAddressLine2,
+                        State = model.ShippingState,
+                        Country = model.ShippingCountry,
+                        Email = model.email,
+                        phoneNumber = model.phoneNumber,
+                        Locale = model.ShippingLocale,
+                        PostalCode = model.ShippingZipcode,
+                        Region = model.ShippingRegion
+
+                    };
+
+                    Braintree.Customer customer = null;
+                    Braintree.CustomerSearchRequest search = new Braintree.CustomerSearchRequest();
+                    search.Email.Is(model.email);
+                    var searchResult = await _brainTreeGateway.Customer.SearchAsync(search);
+                    if (searchResult.Ids.Count == 0)
+                    {
+                        //Create  a new Braintree Customer
+                        Braintree.Result<Customer> creationResult = await _brainTreeGateway.Customer.CreateAsync(new Braintree.CustomerRequest
+                        {
+                            Email = model.email,
+                            Phone = model.phoneNumber
+                        });
+                        customer = creationResult.Target;
                     }
+                    else
+                    {
+                        customer = searchResult.FirstItem;
+                    }
+                    CreditCard creditCard = null;
+                    if (model.SaveBillingCard)
+                    {
+                        var newCardRequest = new CreditCardRequest
+                        {
+                            CardholderName = model.NameOnCard,
+                            CustomerId = customer.Id,
+                            ExpirationMonth = model.BillingCardExpirationMonth.ToString().PadLeft(2, '0'),
+                            ExpirationYear = model.BillingCardExpirationYear.ToString(),
+                            Number = model.CardNumber,
+                            CVV = model.CVV
+                        };
+                        var newCardResult = await _brainTreeGateway.CreditCard.CreateAsync(newCardRequest);
+                        if (newCardResult.IsSuccess())
+                        {
+                            creditCard = newCardResult.Target;
+                        }
+                    }
+
+                    Address savedAddress = null;
+                    if (model.SaveShippingAddress)
+                    {
+                        var newAddressRequest = new AddressRequest
+                        {
+                            StreetAddress = model.ShippingAddressLine1,
+                            ExtendedAddress = model.ShippingAddressLine2,
+                            CountryName = model.ShippingCountry,
+                            PostalCode = model.ShippingZipcode,
+                            Locality = model.ShippingLocale,
+                            Region = model.ShippingRegion
+                        };
+                        var newAddressResult = await _brainTreeGateway.Address.CreateAsync(customer.Id, newAddressRequest);
+                        if (newAddressResult.IsSuccess())
+                        {
+                            savedAddress = newAddressResult.Target;
+                        }
+                    }
+
+
+
+
+                    TransactionRequest transaction = new TransactionRequest
+                    {
+                        //Amount = 1,
+                        Amount = model.Cart.CartItems.Sum(x => x.Quantity * (x.Product.Price ?? 0)),
+                        CustomerId = customer.Id,
+                        LineItems = model.Cart.CartItems.Select(x => new TransactionLineItemRequest
+                        {
+                            Name = x.Product.Name,
+                            Description = x.Product.Description,
+                            ProductCode = x.Product.ID.ToString(),
+                            Quantity = x.Quantity,
+                            LineItemKind = TransactionLineItemKind.DEBIT,
+                            UnitAmount = x.Product.Price * x.Quantity,
+                            TotalAmount = x.Product.Price * x.Quantity
+                        }).ToArray()
+                    };
+
+                    if (creditCard == null)
+                    {
+                        transaction.CreditCard = new TransactionCreditCardRequest
+                        {
+                            Number = model.CardNumber,
+                            CardholderName = model.NameOnCard,
+                            CVV = model.CVV,
+                            ExpirationMonth = model.BillingCardExpirationMonth.ToString().PadLeft(2, '0'),
+                            ExpirationYear = model.BillingCardExpirationYear.ToString()
+                        };
+                    }
+                    else
+                    {
+                        transaction.PaymentMethodToken = creditCard.Token;
+                    }
+                    if (savedAddress != null)
+                    {
+                        transaction.ShippingAddressId = savedAddress.Id;
+                    }
+
+
+                    var transactionResult = await _brainTreeGateway.Transaction.SaleAsync(transaction);
+                    if (transactionResult.IsSuccess())
+                    {
+
+
+                        _context.Orders.Add(newOrder);
+                        _context.CartItems.RemoveRange(model.Cart.CartItems);
+                        _context.Carts.Remove(model.Cart);
+                        await _context.SaveChangesAsync();
+                        //Try to checkout
+                        Response.Cookies.Delete("cartId");
+                        return RedirectToAction("Index", "Receipt", new { id = newOrder.TrackingNumber });
+                    }
+                    for (int i = 0; i < transactionResult.Errors.Count; i++)
+                    {
+                        ModelState.AddModelError("BillingCardNumber" + i, transactionResult.Errors.All()[i].Message);
+                    }
+
                     
-                };
-                var transactionResult = await _brainTreeGateway.Transaction.SaleAsync(transaction);
-                _context.Orders.Add(newOrder);
-                _context.CartItems.RemoveRange(model.Cart.CartItems);
-                _context.Carts.Remove(model.Cart);
-                await _context.SaveChangesAsync();
 
-
-
-                //Try to checkout
-                Response.Cookies.Delete("cartId");
-                return RedirectToAction("Index", "Receipt", new { id = newOrder.TrackingNumber });
+                    //Try to checkout
+                    Response.Cookies.Delete("cartId");
+                    return RedirectToAction("Index", "Receipt", new { id = newOrder.TrackingNumber });
+                }
             }
-
 
             return View(model);
         }
