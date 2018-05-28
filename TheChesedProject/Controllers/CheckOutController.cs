@@ -15,14 +15,17 @@ namespace TheChesedProject.Controllers
         private TCPDbContext _context;
         private SignInManager<TCPUser> _signInManager;
         private BraintreeGateway _brainTreeGateway;
+        private SmartyStreets.USStreetApi.Client _usStreetApiClient;
 
         public CheckOutController(TCPDbContext context, 
             SignInManager<TCPUser> signInManager,
-            Braintree.BraintreeGateway braintreeGateway)
+            Braintree.BraintreeGateway braintreeGateway,
+            SmartyStreets.USStreetApi.Client usStreetApiClient)
         {
             this._context = context;
             this._signInManager = signInManager;
             this._brainTreeGateway = braintreeGateway;
+            this._usStreetApiClient = usStreetApiClient;
         }
 
         public async Task<IActionResult> Index()
@@ -127,6 +130,39 @@ namespace TheChesedProject.Controllers
         }
 
 
-       
+        public IActionResult ValidateAddress(string addressLine1, string addressLine2, string region, string locale, string country, string postalCode)
+        {
+            if (country == "United States of America")
+            {
+                var lookup = new SmartyStreets.USStreetApi.Lookup
+                {
+                    City = locale,
+                    State = region,
+                    Street = addressLine1,
+                    Street2 = addressLine2,
+                    ZipCode = postalCode
+                };
+                _usStreetApiClient.Send(lookup);
+
+                return Json(lookup.Result.Select(x => new
+                {
+                    AddressLine1 = x.DeliveryLine1,
+                    AddressLine2 = x.DeliveryLine2,
+                    PostalCode = x.Components.ZipCode,
+                    Region = x.Components.State,
+                    Locale = x.Components.CityName
+                }));
+            }
+            else
+            {
+                return Json(new[]{ new {
+            AddressLine1 = addressLine1,
+            AddressLine2 = addressLine2,
+            PostalCode = postalCode,
+            Region = region,
+            Locale = locale
+        }});
+            }
+        }
     }
 }

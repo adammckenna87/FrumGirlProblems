@@ -91,6 +91,12 @@ namespace TheChesedProject
                     Configuration["BraintreePublicKey"],
                     Configuration["BraintreePrivateKey"]);
             });
+
+            services.AddTransient((x) =>
+            {
+                SmartyStreets.ClientBuilder builder = new SmartyStreets.ClientBuilder(Configuration["SmartyStreetsAuthId"], Configuration["SmartyStreetsAuthToken"]);
+                return builder.BuildUsStreetApiClient();
+            });
         }
 
        

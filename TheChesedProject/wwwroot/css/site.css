@@ -41,3 +41,11 @@
     background-color: black;
     
 }
+
+.mt-6{
+    margin-top: 5rem;
+}
+.my-6{
+    margin-top: 10rem;
+    margin-bottom: 15rem;
+}

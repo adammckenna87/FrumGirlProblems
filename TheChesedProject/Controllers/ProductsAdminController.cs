@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Hosting;
 
 namespace TheChesedProject.Controllers
 {
+    //[Authorize(Roles= "Administrator")]
     public class ProductsAdminController : Controller
     {
         private readonly TCPDbContext _context;

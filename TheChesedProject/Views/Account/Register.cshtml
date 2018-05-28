@@ -3,20 +3,21 @@
     ViewData["Title"] = "Register";
 }
 
-<h2 class="mt-5">Register</h2>
-@if (!ViewData.ModelState.IsValid)
-{
-    <div class="alert-danger">
-        <ul>
-            @foreach (var error in ViewData.ModelState.Values.SelectMany(m => m.Errors))
-            {
-                <li>@error.ErrorMessage</li>
-            }
-        </ul>
-    </div>
-}
+<div class="container mt-6">
+    <h2>Register</h2>
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert-danger">
+            <ul>
+                @foreach (var error in ViewData.ModelState.Values.SelectMany(m => m.Errors))
+                {
+                    <li>@error.ErrorMessage</li>
+                }
+            </ul>
+        </div>
+    }
     <form method="Post" asp-action="Register" asp-controller="Account">
-        
+
         <div class="form-group">
             <label asp-for="userName"></label>
             <input asp-for="userName" class="form-control" type="text" placeholder="Enter your user name" required />
@@ -45,3 +46,4 @@
     </form>
 
 
+</div>
