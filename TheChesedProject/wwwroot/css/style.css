@@ -7,7 +7,9 @@ Author: Surjith S M
    GLOBAL STYLES
    ============================================================== */
 body {
-  font-family: 'Roboto', sans-serif; }
+  font-family: 'Roboto', sans-serif;
+  color: #fff;
+}
 
 h1 {
     font-size: 72px ;
@@ -119,8 +121,9 @@ p {
   height: 70px; }
 
 .is-sticky {
-  background: #252a33;
-  opacity: 1; }
+    background: #01D0E1;
+    opacity: 1;
+}
 
 .transition {
   -webkit-transition: all 1s ease-in-out;
@@ -129,7 +132,7 @@ p {
   transition: all 1s ease-in-out; }
 
 .fixed {
-  border-bottom: 1px solid #636363;
+  border-bottom: 1px solid #fff;
   position: fixed;
   top: 0;
   left: 0;
@@ -157,7 +160,7 @@ p {
   padding: 0 8px 0 0; }
 
 .slider {
-  background: url(../images/loveyourneighbourhat.jpg) no-repeat;
+  background: url(../images/blueskieslogo2.jpg) no-repeat;
   background-size: cover;
   min-height: 800px; }
   @media (max-width: 992px) {
@@ -284,16 +287,17 @@ p {
     position: relative;
     padding: 0 0 23px; }
     .styled-heading h3:after {
-      position: absolute;
-      content: "";
-      width: 60px;
-      height: 3px;
-      background: #ff3a6d;
-      bottom: 0;
-      left: 50%;
-      -webkit-transform: translateX(-50%);
-      -ms-transform: translateX(-50%);
-      transform: translateX(-50%); }
+        position: absolute;
+        content: "";
+        width: 60px;
+        height: 3px;
+        background: #01D0E1;
+        bottom: 0;
+        left: 50%;
+        -webkit-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+        transform: translateX(-50%);
+    }
 
 .find-img-align {
   padding: 0 0 15px; }
