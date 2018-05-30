@@ -21,6 +21,7 @@ namespace TheChesedProject.Models
 
         }
 
+        public DbSet<CommunityService> CommunityServices { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
@@ -37,6 +38,19 @@ namespace TheChesedProject.Models
         public string Name { get; set; }
         public string OwnerFirstName { get; set; }
         public string OwnerLastName { get; set; }
+        public string Description { get; set; }
+        public string Conditions { get; set; }
+        public string Image { get; set; }
+        public string PhoneNumber { get; set; }
+        public string City { get; set; }
+        public string Community { get; set; }
+    }
+
+    public class CommunityService
+    {
+        public int ID { get; set; }
+        public string Category { get; set; }
+        public string Name { get; set; }
         public string Description { get; set; }
         public string Conditions { get; set; }
         public string Image { get; set; }
