@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using TheChesedProject.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace TheChesedProject.Controllers
 {
@@ -13,13 +14,13 @@ namespace TheChesedProject.Controllers
     {
 
         private readonly TCPDbContext _context;
-        private   IHostingEnvironment _env;
+        private SignInManager<TCPUser> _signInManager;
 
-        public ProductController(TCPDbContext context, IHostingEnvironment env)
+        public ProductController(TCPDbContext context, SignInManager<TCPUser> signInManager)
         {
 
             _context = context;
-            _env = env;
+            _signInManager = signInManager;
 
         }
 

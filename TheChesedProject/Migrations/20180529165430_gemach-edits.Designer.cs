@@ -11,9 +11,10 @@ using TheChesedProject.Models;
 namespace TheChesedProject.Migrations
 {
     [DbContext(typeof(TCPDbContext))]
-    partial class TCPDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180529165430_gemach-edits")]
+    partial class gemachedits
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -167,11 +168,9 @@ namespace TheChesedProject.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Address");
+
                     b.Property<string>("Category");
-
-                    b.Property<string>("City");
-
-                    b.Property<string>("Community");
 
                     b.Property<string>("Conditions");
 

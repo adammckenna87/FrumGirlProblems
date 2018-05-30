@@ -46,25 +46,28 @@
                                         <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home <span class="sr-only">(current)</span></a>
                                     </li>
                                     <li class="nav-item">
+                                        <a class="nav-link" asp-controller="Gemach" asp-action="Index">Gemach Directory</a>
+                                    </li>
+                                    <li class="nav-item">
                                         <a class="nav-link" asp-controller="Product" asp-action="Index">Shop</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" asp-area="" asp-controller="Cart" asp-action="Index"><span id="cartBadge" class="badge badge-primary">0</span>Cart</a>
                                     </li>
                                     @if (!User.Identity.IsAuthenticated)
-            {
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Account" asp-action="SignIn">Sign In</a>
-                        </li>
+    {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Account" asp-action="SignIn">Sign In</a>
+                                </li>
 }
 else
 {
-                        <li class="nav-item">
-                            <a class="nav-link">Sign Out as @User.Identity.Name</a>
-                        </li>
+                                <li class="nav-item">
+                                    <a class="nav-link">Sign Out as @User.Identity.Name</a>
+                                </li>
 }
                                     <li><a href="#" class="btn btn-outline-light top-btn"><span class="ti-plus"></span> Add Listing</a></li>
                                 </ul>

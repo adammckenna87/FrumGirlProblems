@@ -35,13 +35,14 @@ namespace TheChesedProject.Models
         public int ID { get; set; }
         public string Category { get; set; }
         public string Name { get; set; }
+        public string OwnerFirstName { get; set; }
+        public string OwnerLastName { get; set; }
         public string Description { get; set; }
         public string Conditions { get; set; }
-        public string Address { get; set; }
         public string Image { get; set; }
         public string PhoneNumber { get; set; }
-        public int timeOpen { get; set; }
-        public int TimeClose { get; set; }
+        public string City { get; set; }
+        public string Community { get; set; }
     }
 
     public class Cart
