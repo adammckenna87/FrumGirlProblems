@@ -77,6 +77,7 @@ namespace TheChesedProject.Models
 
         [Required]
         [Display(Name = "Card Number")]
+        [MaxLength(16)]
         public string CardNumber { get; set; }
 
         [Required]

@@ -6,104 +6,30 @@
 
 
 <div class="container">
-    <h2 class="mt-6 mb-4">Showing @Model.Count() Gemachs in Chicago</h2>
+    <h2 class="mt-6 mb-4">Showing @Model.Count() Gemachs in @string.Join(",", Model.Select(x => x.City).Distinct())</h2>
 
-    <div class="container">
-        <h4>Baby & Toddler</h4>
-    </div>
+    
 
     <div class="row">
-        @foreach (var gemach in Model)
-    {
-        @if (gemach.Category == "Baby & Toddler")
-    {
-        <div class="card border-warning m-4" style="max-width: 18rem;">
-            <div class="card-header bg-warning"></div>
-            <div class="card-body" style="color: black;">
-                <h6 class="card-title">@gemach.Name</h6>
-                <h6 class="card-title">@gemach.Description</h6>
-                <p class="card-text">Contact @gemach.OwnerFirstName @gemach.OwnerLastName</p>
-                <p class="card-text">@gemach.PhoneNumber</p>
-            </div>
-        </div>
-}
-}
+        @foreach (var group in Model.GroupBy(x => x.Category))
+        {
 
-        <div class="container">
-            <h4>Clothing</h4>
-        </div>
-        @foreach (var gemach in Model)
-    {
-        @if (gemach.Category == "Clothing")
-    {
-        <div class="card border-warning m-4" style="max-width: 18rem;">
-            <div class="card-header bg-warning"></div>
-            <div class="card-body" style="color: #01D0E1;">
-                <h6 class="card-title">@gemach.Name</h6>
-                <h6 class="card-title">@gemach.Description</h6>
-                <p class="card-text">Contact @gemach.OwnerFirstName @gemach.OwnerLastName</p>
-                <p class="card-text">@gemach.PhoneNumber</p>
+            <div class="container">
+                <h4>@group.Key</h4>
             </div>
-        </div>
-}
-}
-        <div class="container">
-            <h4>Financial</h4>
-        </div>
-        @foreach (var gemach in Model)
-    {
-        @if (gemach.Category == "Financial")
-    {
-        <div class="card border-warning m-4" style="max-width: 18rem;">
-            <div class="card-header bg-warning"></div>
-            <div class="card-body" style="color: #01D0E1;">
-                <h6 class="card-title">@gemach.Name</h6>
-                <h6 class="card-title">@gemach.Description</h6>
-                <p class="card-text">Contact @gemach.OwnerFirstName @gemach.OwnerLastName</p>
-                <p class="card-text">@gemach.PhoneNumber</p>
-            </div>
-        </div>
-}
-}
-        <div class="container">
-            <h4>Medical & Hospital</h4>
-        </div>
-        @foreach (var gemach in Model)
-    {
-        @if (gemach.Category == "Medical & Hospital")
-    {
-        <div class="card border-warning m-4" style="max-width: 18rem;">
-            <div class="card-header bg-warning"></div>
-            <div class="card-body" style="color: #01D0E1;">
-                <h6 class="card-title">@gemach.Name</h6>
-                <h6 class="card-title">@gemach.Description</h6>
-                <p class="card-text">Contact @gemach.OwnerFirstName @gemach.OwnerLastName</p>
-                <p class="card-text">@gemach.PhoneNumber</p>
-            </div>
-        </div>
-}
-}
-
-        <div class="container">
-            <h4>Miscellaneous</h4>
-        </div>
-        @foreach (var gemach in Model)
-    {
-        @if (gemach.Category == "Miscellaneous")
-    {
-        <div class="card border-warning m-4" style="max-width: 18rem;">
-            <div class="card-header bg-warning"></div>
-            <div class="card-body" style="color: #01D0E1;">
-                <h6 class="card-title">@gemach.Name</h6>
-                <h6 class="card-title">@gemach.Description</h6>
-                <p class="card-text">Contact @gemach.OwnerFirstName @gemach.OwnerLastName</p>
-                <p class="card-text">@gemach.PhoneNumber</p>
-            </div>
-        </div>
-}
-}
-
-
+            @foreach (var gemach in group)
+            {
+                <div class="card border-warning m-4" style="max-width: 18rem;">
+                    <div class="card-header bg-warning"></div>
+                    <div class="card-body" style="color: #01D0E1;">
+                        <h6 class="card-title">@gemach.Name</h6>
+                        <h6 class="card-title">@gemach.Description</h6>
+                        <p class="card-text">Contact @gemach.OwnerFirstName @gemach.OwnerLastName</p>
+                        <p class="card-text">@gemach.PhoneNumber</p>
+                    </div>
+                </div>
+            }
+        }
     </div>
 </div>
   

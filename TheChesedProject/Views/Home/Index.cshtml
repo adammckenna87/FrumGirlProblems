@@ -15,22 +15,25 @@
                     </div>
                     <div class="row d-flex justify-content-center my-6">
                         <div class="col-md-10">
-                            <form class="form-wrap mt-4" asp-controller="Gemach" asp-action="Index">
+                            <form class="form-wrap mt-4" asp-controller="Gemach" asp-action="Index" method="get">
                                 <div class="btn-group" role="group" aria-label="Basic  example">
-                                    <select id="categoryName" class="custom-select custom-select-lg mb-3">
-                                        <option selected>What Are You Looking for?</option>
-                                        <option value="1">Baby & Toddler</option>
-                                        <option value="2">Clothing</option>
-                                        <option value="3">Financial</option>
-                                        <option value="4">Medical & Hospital</option>
-                                        <option value="5">Miscellaneous</option>
-                                        <option value="6">Religious</option>
-                                        <option value="7">Simcha</option>
-                                        <option value="8">Community Services</option>
+                                    <select id="categoryName" class="custom-select custom-select-lg mb-3" name="category">
+                                        <option value="" selected>What Are You Looking for?</option>
+                                        @foreach(string cat in ((string[])ViewData["Categories"]))
+                                        {
+                                            <option value="@cat">@cat</option>
+
+                                        }
+                                        
                                     </select>
-                                    <select id="cityName" class="custom-select custom-select-lg mb-3">
-                                        <option selected>Choose a City</option>
-                                        <option value="1">Chicago</option>
+                                    <select id="cityName" class="custom-select custom-select-lg mb-3" name="city">
+                                        <option value="" selected>Choose a City</option>
+                                        @foreach (string city in ((string[])ViewData["Cities"]))
+    {
+                                    <option value="@city">@city</option>
+
+}
+
                                     </select>
                                     <input id="selectInput" type="submit" class="btn btn-warning" style="height: 3rem; width: 35rem;" value="Search" />
                                 </div>
@@ -60,7 +63,7 @@
 
     <div class="row">
         <div class="col-md-3 category-responsive">
-            <a href="#" class="category-wrap">
+            <a asp-action="index" asp-controller="gemach" asp-route-category="religious" class="category-wrap">
                 <div class="category-block">
                     <img class="img-fluid category-img" src="~/images/torah.jpg" />
                     <!--
@@ -96,7 +99,7 @@
             </a>
         </div>
         <div class="col-md-3 category-responsive">
-            <a href="#" class="category-wrap">
+            <a asp-action="index" asp-controller="gemach" asp-route-category="Medical & Hospital" class="category-wrap">
                 <div class="category-block">
                     <svg class="category-img" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 469.824 469.824" style="enable-background:new 0 0 469.824 469.824;" xml:space="preserve" width="512px"
                          height="512px"><g><g>
@@ -138,7 +141,7 @@
             </a>
         </div>
         <div class="col-md-3 category-responsive">
-            <a href="#" class="category-wrap">
+            <a asp-action="index" asp-controller="gemach" asp-route-category="Financial" class="category-wrap">
                 <div class="category-block">
                     <svg class="category-img" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_2" x="0px" y="0px" viewBox="0 0 503.607 503.607" style="enable-background:new 0 0 503.607 503.607;" xml:space="preserve" width="512px"
                          height="512px"><g><g transform="translate(1 1)">
@@ -240,7 +243,7 @@
             </a>
         </div>
         <div class="col-md-3 category-responsive">
-            <a href="#" class="category-wrap">
+            <a asp-action="index" asp-controller="gemach" asp-route-category="Community Services" class="category-wrap">
                 <div class="category-block">
                     <svg class="category-img" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_3" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve" width="512px" height="512px"><g><g>
                     <g>
@@ -295,7 +298,7 @@
 
     <div class="row">
         <div class="col-md-3 category-responsive">
-            <a href="#" class="category-wrap">
+            <a asp-action="index" asp-controller="gemach" asp-route-category="Baby & Toddler" class="category-wrap">
                 <div class="category-block">
                     <svg class="category-img" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_2" x="0px" y="0px" viewBox="0 0 60 60" style="enable-background:new 0 0 60 60;" xml:space="preserve" width="512px" height="512px"><g><g>
                     <path d="M59,16V2H1v14H0v37.259C0,55.873,2.127,58,4.742,58h50.517C57.873,58,60,55.873,60,53.259V16H59z M56.5,16l-5.18-6.906   L56.414,4H57v12H56.5z M11,16V9c0-0.024-0.012-0.046-0.014-0.07c-0.005-0.064-0.02-0.124-0.036-0.187   c-0.011-0.042-0.01-0.085-0.027-0.125c-0.009-0.022-0.027-0.039-0.037-0.061c-0.027-0.055-0.065-0.102-0.103-0.152   c-0.028-0.036-0.044-0.081-0.077-0.113L6.414,4h47.172l-4.292,4.292c-0.032,0.032-0.049,0.077-0.077,0.113   c-0.038,0.05-0.075,0.097-0.102,0.152c-0.011,0.022-0.028,0.038-0.038,0.061c-0.017,0.04-0.016,0.084-0.027,0.125   c-0.017,0.063-0.032,0.122-0.036,0.187C49.012,8.954,49,8.976,49,9v7H11z M6,16l3-4.001V16H6z M51,11.999L54,16h-3V11.999z M3,4   h0.586L8.68,9.094L3.5,16H3V4z M58,53.259C58,54.771,56.77,56,55.258,56H4.742C3.23,56,2,54.771,2,53.259V18h56V53.259z" data-original="#000000" class="active-path" data-old_color="#ff3a6d" fill="#ff3a6d" />
@@ -344,7 +347,7 @@
             </a>
         </div>
         <div class="col-md-3 category-responsive">
-            <a href="#" class="category-wrap">
+            <a asp-action="index" asp-controller="gemach" asp-route-category="Clothing" class="category-wrap">
                 <div class="category-block">
                     <svg class="category-img" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_3" x="0px" y="0px" viewBox="0 0 511.988 511.988" style="enable-background:new 0 0 511.988 511.988;" xml:space="preserve" width="512px"
                          height="512px"><g><g>
@@ -423,7 +426,7 @@
             </a>
         </div>
         <div class="col-md-3 category-responsive">
-            <a href="#" class="category-wrap">
+            <a asp-action="index" asp-controller="gemach" asp-route-category="Simcha" class="category-wrap">
                 <div class="category-block">
                     <svg class="category-img" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_4" x="0px" y="0px" viewBox="0 0 33 33" style="enable-background:new 0 0 33 33;" xml:space="preserve" width="512px" height="512px"><g><g>
                     <g>
@@ -496,7 +499,7 @@
             </a>
         </div>
         <div class="col-md-3 category-responsive">
-            <a href="#" class="category-wrap">
+            <a asp-action="index" asp-controller="gemach" asp-route-category="Miscellaneous" class="category-wrap">
                 <div class="category-block">
                     <svg class="category-img" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_5" x="0px" y="0px" viewBox="0 0 61.168 61.168" style="enable-background:new 0 0 61.168 61.168;" xml:space="preserve" width="512px"
                          height="512px"><g><g>
@@ -537,7 +540,7 @@
 <!--//END CATEGORIES -->
 <!--============================= FIND PLACES =============================-->
 
-<div class="styled-heading mt-4">
+<div class="styled-heading mt-6">
     <h3>GET INSPIRED</h3>
 </div>
 <div class="container">
@@ -623,7 +626,7 @@
         <div class="row justify-content-center">
             <div class="col-md-4">
                 <div class="featured-btn-wrap">
-                    <a href="#" class="btn btn-danger"><span class="ti-plus"></span> ADD LISTING</a>
+                    <a asp-controller="Account" asp-action="Register" method="get" class="btn btn-danger"><span class="ti-plus"></span> CREATE ACCOUNT</a>
                 </div>
             </div>
         </div>

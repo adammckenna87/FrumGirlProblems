@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -23,9 +24,47 @@ namespace TheChesedProject.Controllers
 
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string category, string city)
         {
-            return View(await _context.Gemachs.ToListAsync());
+            IQueryable<Gemach> gemachs = _context.Gemachs;
+            if (!string.IsNullOrEmpty(category))
+            {
+                gemachs = gemachs.Where(x => x.Category == category);
+            }
+            if (!string.IsNullOrEmpty(city))
+            {
+                gemachs = gemachs.Where(x => x.City == city);
+            }
+          
+            return View(await gemachs.ToListAsync());
+        }
+
+        [Authorize]
+        public async Task<IActionResult> AddListing()
+        {
+          
+            return View();
+        }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: ProductsAdmin/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("ID,Category,Name,Description,City,Community,OwnerFirstName,OwnerLastName,PhoneNumber")] Gemach gemach)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(gemach);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(gemach);
         }
 
         public async Task<IActionResult> Details(int? id)

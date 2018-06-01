@@ -94,8 +94,8 @@ namespace TheChesedProject.Controllers
             {
 
                 if (!string.IsNullOrEmpty(model.SavedAddressId) ||
-                    (!string.IsNullOrEmpty(model.ShippingAddressLine1) && !string.IsNullOrEmpty(model.ShippingLocale)
-                    && !string.IsNullOrEmpty(model.ShippingRegion) && !string.IsNullOrEmpty(model.ShippingZipcode) && !string.IsNullOrEmpty(model.ShippingCountry)))
+                    (!string.IsNullOrEmpty(model.ShippingAddressLine1) && !string.IsNullOrEmpty(model.ShippingCity)
+                    && !string.IsNullOrEmpty(model.ShippingState) && !string.IsNullOrEmpty(model.ShippingZipcode) && !string.IsNullOrEmpty(model.ShippingCountry)))
                 {
 
                     Order newOrder = new Order
@@ -109,15 +109,16 @@ namespace TheChesedProject.Controllers
                             ProductPrice = (x.Product.Price ?? 0),
                             Quantity = x.Quantity
                         }).ToArray(),
-                        BillingAddress = model.BillingAddressLine1 + model.BillingAddressLine2,
-                        ShippingAddress = model.ShippingAddressLine1 + model.ShippingAddressLine2,
+                        
+                        AddressLine1 = model.ShippingAddressLine1,
+                        AddressLine2 = model.ShippingAddressLine2,
                         State = model.ShippingState,
                         Country = model.ShippingCountry,
                         Email = model.email,
                         phoneNumber = model.phoneNumber,
-                        Locale = model.ShippingLocale,
+                        Locale = model.ShippingCity,
                         PostalCode = model.ShippingZipcode,
-                        Region = model.ShippingRegion
+                        
 
                     };
 
@@ -167,8 +168,8 @@ namespace TheChesedProject.Controllers
                             ExtendedAddress = model.ShippingAddressLine2,
                             CountryName = model.ShippingCountry,
                             PostalCode = model.ShippingZipcode,
-                            Locality = model.ShippingLocale,
-                            Region = model.ShippingRegion
+                            Locality = model.ShippingCity,
+                            Region = model.ShippingState
                         };
                         var newAddressResult = await _brainTreeGateway.Address.CreateAsync(customer.Id, newAddressRequest);
                         if (newAddressResult.IsSuccess())

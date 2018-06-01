@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SendGrid;
 using Microsoft.AspNetCore.Http.Extensions;
+using Braintree;
 
 namespace TheChesedProject.Controllers
 {
@@ -14,14 +15,15 @@ namespace TheChesedProject.Controllers
     {
         EmailService _emailService;
         Braintree.BraintreeGateway _braintreeGateway;
-
-
         SignInManager<TCPUser> _signInManager;
-        public AccountController(SignInManager<TCPUser> signInManager, EmailService emailService)
+        private TCPDbContext _context;
+
+        public AccountController(SignInManager<TCPUser> signInManager, EmailService emailService, BraintreeGateway braintreeGateway, TCPDbContext context)
         { 
             this._signInManager = signInManager;
             this._emailService = emailService;
-
+            this._braintreeGateway = braintreeGateway;
+            this._context = context;
         }
 
         public IActionResult Index()
@@ -37,7 +39,7 @@ namespace TheChesedProject.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> RegisterAsync(Models.RegisterViewModel model)
+        public async Task<IActionResult> Register(Models.RegisterViewModel model)
         {
             
         
@@ -96,7 +98,7 @@ namespace TheChesedProject.Controllers
                         await this._signInManager.SignInAsync(newUser, false);
                         var emailResult = await this._emailService.SendEmailAsync(
                             model.email,
-                            "Welcome to BikeStore!",
+                            "Welcome to The Chesed Project!",
                              "<p>Thanks for signing up, " + model.userName + "!</p><p><a href=\"" + confirmationUrl + "\">Confirm your account<a></p>",
                              "Thanks for signing up, " + model.userName + "!"
                             );
@@ -128,9 +130,9 @@ namespace TheChesedProject.Controllers
         }
 
 
-        public IActionResult SignOut()
+        public async Task<IActionResult> SignOut()
         {
-            this._signInManager.SignOutAsync().Wait();
+            await this._signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
 
@@ -141,18 +143,18 @@ namespace TheChesedProject.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult SignIn(Models.SignInViewModel model)
+        public async Task<IActionResult> SignIn(SignInViewModel model)
         {
 
             if (ModelState.IsValid)
             {
-                TCPUser existingUser = this._signInManager.UserManager.FindByNameAsync(model.email).Result;
+                TCPUser existingUser = await _signInManager.UserManager.FindByEmailAsync(model.email);
                 if (existingUser != null)
                 {
-                    Microsoft.AspNetCore.Identity.SignInResult passwordResult = this._signInManager.CheckPasswordSignInAsync(existingUser, model.password, false).Result;
+                    Microsoft.AspNetCore.Identity.SignInResult passwordResult = await this._signInManager.CheckPasswordSignInAsync(existingUser, model.password, false);
                     if (passwordResult.Succeeded)
                     {
-                        this._signInManager.SignInAsync(existingUser, false).Wait();
+                        await this._signInManager.SignInAsync(existingUser, false);
                         return RedirectToAction("Index", "Home");
                     }
                     else

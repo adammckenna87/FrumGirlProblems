@@ -68,10 +68,12 @@
 else
 {
                                 <li class="nav-item">
-                                    <a class="nav-link">Sign Out as @User.Identity.Name</a>
+                                    <a asp-controller="Account" asp-action="SignOut" class="nav-link">Sign Out as @User.Identity.Name</a>
                                 </li>
+                                <li><a asp-controller="Gemach" asp-action="AddListing" method="get" class="btn btn-outline-light top-btn"><span class="ti-plus"></span> Add Listing</a></li>
+
 }
-                                    <li><a href="#" class="btn btn-outline-light top-btn"><span class="ti-plus"></span> Add Listing</a></li>
+
                                 </ul>
                             </div>
                         </nav>

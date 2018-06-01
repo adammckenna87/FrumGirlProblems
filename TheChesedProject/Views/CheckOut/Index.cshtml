@@ -7,7 +7,7 @@
 <div class="container mt-6" style="color: black;">
     <h2>CheckOut</h2>
 
-    <form method="Post" asp-action="CheckOut" asp-controller="CheckOut">
+    <form method="Post" asp-action="Index" asp-controller="CheckOut">
 
         <div class="row">
             <div class="col-md-4 order-md-last">
@@ -74,28 +74,23 @@
                     </label>
                 </div>
 }
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" asp-for="SavedAddressId" value="" checked>
-                    <label class="form-check-label" asp-for="SavedAddressId">
-                        New Address:
-                    </label>
-                </div>
+              
 }
                     <label asp-for="ShippingAddressLine1"></label>
-                    <input type="text" class="form-control" id="inputAddress1" placeholder="Apartment, studio, or floor">
+                    <input type="text" class="form-control" asp-for="ShippingAddressLine1" placeholder="Apartment, studio, or floor">
                 </div>
                 <div class="form-group">
                     <label asp-for="ShippingAddressLine2"></label>
-                    <input type="text" class="form-control" id="inputAddress2" placeholder="Street Name">
+                    <input type="text" class="form-control" asp-for="ShippingAddressLine2" placeholder="Street Name">
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label asp-for="ShippingCity"></label>
-                        <input type="text" class="form-control" id="inputCity">
+                        <input type="text" class="form-control" asp-for="ShippingCity">
                     </div>
                     <div class="form-group col-md-4">
                         <label asp-for="ShippingState"></label>
-                        <select id="inputState" class="form-control">
+                        <select asp-for="ShippingState" class="form-control">
                             <option selected>Choose...</option>
                             <option value="AL">Alabama</option>
                             <option value="AK">Alaska</option>
@@ -150,13 +145,17 @@
                             <option value="WY">Wyoming</option>
                         </select>
                     </div>
+                    <div class="form-group col-md-6">
+                        <label asp-for="ShippingCountry"></label>
+                        <input asp-for="ShippingCountry" type="text" class="form-control">
+                    </div>
                     <div class="form-group col-md-2">
                         <label asp-for="ShippingZipcode"></label>
-                        <input type="text" class="form-control" id="inputZip">
+                        <input asp-for="ShippingZipcode" type="text" class="form-control">
                     </div>
                     @if (User.Identity.IsAuthenticated)
     {
-                <div class="form-check">
+                <div class="form-check m-3">
                     <input class="form-check-input" type="checkbox" asp-for="SaveShippingAddress">
                     <label class="form-check-label" asp-for="SaveShippingAddress">
                     </label>
@@ -188,7 +187,7 @@
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label asp-for="NameOnCard">Name on card</label>
-                    <input type="text" class="form-control" id="cc-name" placeholder="" required="">
+                    <input type="text" class="form-control"  placeholder="" required="">
                     <small class="text-muted">Full name as displayed on card</small>
                     <div class="invalid-feedback">
                         Name on card is required
@@ -196,16 +195,16 @@
                 </div>
                 <div class="col-md-6 mb-3">
                     <label asp-for="CardNumber">Credit card number</label>
-                    <input type="text" class="form-control" id="cc-number" placeholder="" required="">
+                    <input type="text" class="form-control" placeholder="" required="">
                     <div class="invalid-feedback">
                         Credit card number is required
                     </div>
                 </div>
             </div>
             <div class="form-row">
-                <div class="form-group col-8 mb-3">
-                    <label asp-for="NameOnCard"></label>
-                    <input type="text" asp-for="NameOnCard" required class="form-control" placeholder="John Cardholder" />
+                <div class="form-group col-2 mb-3">
+                    <label asp-for="CVV"></label>
+                    <input type="text" asp-for="CVV" required class="form-control" placeholder="CVV" />
                 </div>
                 <div class="form-group col-2 mb-3">
                     <label asp-for="BillingCardExpirationMonth"></label>
@@ -265,15 +264,15 @@
         });
 
 
-$('#validateButton').click(() => {
+        $('#validateButton').click(() => {
             console.log("Validate clicked");
             var addressLine1 = $('#ShippingAddressLine1').val();
             var addressLine2 = $('#ShippingAddressLine2').val();
-            var locale = $('#ShippingLocale').val();
+            var locale = $('#ShippingCity').val();
 
-            var region = $('#ShippingRegion').val();
+            var region = $('#ShippingState').val();
             var country = $('#ShippingCountry').val();
-            var postalCode = $('#ShippingPostalCode').val();
+            var postalCode = $('#ShippingZipcode').val();
             var url = '/Checkout/ValidateAddress?'
             if (addressLine1) {
                 url += ('addressLine1=' + addressLine1 + '&')
@@ -297,26 +296,16 @@ $('#validateButton').click(() => {
             $.getJSON(url).then((response) => {
                 $('#ShippingAddressLine1').val(response[0].addressLine1).addClass('is-valid');
                 $('#ShippingAddressLine2').val(response[0].addressLine2).addClass('is-valid');
-                $('#ShippingLocale').val(response[0].locale).addClass('is-valid');
-                $('#ShippingPostalCode').val(response[0].postalCode).addClass('is-valid');
-                $('#ShippingRegion').val(response[0].region).addClass('is-valid');
+                $('#ShippingCity').val(response[0].locale).addClass('is-valid');
+                $('#ShippingZipcode').val(response[0].postalCode).addClass('is-valid');
+                $('#ShippingState').val(response[0].region).addClass('is-valid');
 
                 $()
 
-    });
+            });
 
-    $('input[name=SavedAddressId]', '#checkout').change(() => {
-
-        if ($('input[name=SavedAddressId]:checked', '#checkout').val().length > 0) {
-            console.log('disable');
-            $('#shipping').find('input[type = text], input[type = checkbox], select').prop('disabled', true);
-
-        } else {
-
-            console.log('enable');
-            $('#shipping').find('input[type = text], input[type = checkbox], select').prop('disabled', false);
-        }
-    });
         })
+
+    });
 </script>
     }

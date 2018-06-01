@@ -11,9 +11,10 @@ using TheChesedProject.Models;
 namespace TheChesedProject.Migrations
 {
     [DbContext(typeof(TCPDbContext))]
-    partial class TCPDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180601134045_OrderShipping")]
+    partial class OrderShipping
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -223,10 +224,6 @@ namespace TheChesedProject.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("AddressLine1");
-
-                    b.Property<string>("AddressLine2");
-
                     b.Property<string>("BillingAddress");
 
                     b.Property<string>("Country");
@@ -240,6 +237,10 @@ namespace TheChesedProject.Migrations
                     b.Property<string>("PostalCode");
 
                     b.Property<string>("Region");
+
+                    b.Property<string>("ShippingAddressLine1");
+
+                    b.Property<string>("ShippingAddressLine2");
 
                     b.Property<string>("State");
 

@@ -3,7 +3,7 @@
     ViewData["Title"] = "Register";
 }
 
-<div class="container mt-6">
+<div class="container mt-6" style="color: black;">
     <h2>Register</h2>
     @if (!ViewData.ModelState.IsValid)
     {
@@ -42,7 +42,7 @@
             <label asp-for="password"></label>
             <input asp-for="password" class="form-control" type="password" placeholder="Enter your Password" required />
         </div>
-        <input type="submit" class="btn btn-primary" value="Sign Up" />
+        <input type="submit" class="btn btn-primary mb-4" value="Sign Up" />
     </form>
 
 

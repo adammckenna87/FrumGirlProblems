@@ -13,7 +13,6 @@ namespace TheChesedProject.Models
         public string email { get; set; }
 
         [System.ComponentModel.DataAnnotations.Required]
-
         public string password { get; set; }
 
         [Display(Name = "Remember Me")]

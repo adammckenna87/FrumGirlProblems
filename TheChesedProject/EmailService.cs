@@ -38,11 +38,11 @@ namespace TheChesedProject
         public async Task<SendEmailResult> SendEmailAsync(string recipient, string subject, string htmlContent, string plainTextContent)
         {
 
-            var from = new SendGrid.Helpers.Mail.EmailAddress("admin@codingtemplebikes.com", "Coding Temple Bikes");
+            var from = new SendGrid.Helpers.Mail.EmailAddress("admin@thechesedproject.com", "The Chesed Project");
 
             var to = new SendGrid.Helpers.Mail.EmailAddress(recipient);
             var message = SendGrid.Helpers.Mail.MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
-            message.SetTemplateId("a58eb3b6-f8e3-403d-bdba-5796e2df4172");
+            message.SetTemplateId("f54eaab7-93e1-48c4-9fc0-706fadd1af38");
             var mailResult = await _sendGridClient.SendEmailAsync(message);
 
             SendEmailResult result = new SendEmailResult();

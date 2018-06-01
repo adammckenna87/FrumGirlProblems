@@ -21,8 +21,10 @@ namespace TheChesedProject.Controllers
 
 
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            ViewData["Categories"] = await _db.Gemachs.Select(x => x.Category).Distinct().ToArrayAsync();
+            ViewData["Cities"] = await _db.Gemachs.Select(x => x.City).Distinct().ToArrayAsync();
             return View();
         }
 

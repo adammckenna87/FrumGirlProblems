@@ -96,7 +96,8 @@ namespace TheChesedProject.Models
         public string phoneNumber { get; set; }
         public string TrackingNumber { get; set; }
         public string BillingAddress { get; set; }
-        public string ShippingAddress { get; set; }
+        public string AddressLine1 { get; set; }
+        public string AddressLine2 { get; set; }
         public string State { get; set; }
         public string Locale { get; set; }
         public string PostalCode { get; set; }
