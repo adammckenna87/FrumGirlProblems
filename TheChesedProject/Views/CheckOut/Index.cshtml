@@ -63,18 +63,22 @@
                     <input asp-for="phoneNumber" class="form-control" type="tel" placeholder="Enter your telephone number" required />
                 </div>
                 <div class="form-group">
-                    @if (User.Identity.IsAuthenticated)
-    {
-                @foreach (var savedAddress in Model.Addresses)
-{
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" asp-for="SavedAddressId" value="@savedAddress.Id">
-                    <label class="form-check-label" asp-for="SavedAddressId">
-                        @savedAddress.StreetAddress @savedAddress.ExtendedAddress @savedAddress.Locality @savedAddress.Region @savedAddress.PostalCode
-                    </label>
+                    <label asp-for="email"></label>
+                    <input asp-for="email" class="form-control" type="email" placeholder="Enter your email" required />
                 </div>
+                <div class="form-group">
+                    @if (Model.Addresses != null)
+        {
+            @foreach (var savedAddress in Model.Addresses)
+{
+            <div class="form-check">
+                <input class="form-check-input" type="radio" asp-for="SavedAddressId" value="@savedAddress.Id">
+                <label class="form-check-label" asp-for="SavedAddressId">
+                    @savedAddress.StreetAddress @savedAddress.ExtendedAddress @savedAddress.Locality @savedAddress.Region @savedAddress.PostalCode
+                </label>
+            </div>
 }
-              
+
 }
                     <label asp-for="ShippingAddressLine1"></label>
                     <input type="text" class="form-control" asp-for="ShippingAddressLine1" placeholder="Apartment, studio, or floor">
@@ -154,12 +158,12 @@
                         <input asp-for="ShippingZipcode" type="text" class="form-control">
                     </div>
                     @if (User.Identity.IsAuthenticated)
-    {
-                <div class="form-check m-3">
-                    <input class="form-check-input" type="checkbox" asp-for="SaveShippingAddress">
-                    <label class="form-check-label" asp-for="SaveShippingAddress">
-                    </label>
-                </div>
+        {
+            <div class="form-check m-3">
+                <input class="form-check-input" type="checkbox" asp-for="SaveShippingAddress">
+                <label class="form-check-label" asp-for="SaveShippingAddress">
+                </label>
+            </div>
 }
                     <button class="btn btn-secondary" type="button" id="validateButton">Validate Address</button>
                 </div>

@@ -34,18 +34,10 @@ namespace TheChesedProject.Models
         [Display(Name = "Address Line 1")]
         public string ShippingAddressLine1 { get; set; }
 
-        [Required]
+       
         [Display(Name = "Address Line 2")]
         public string ShippingAddressLine2 { get; set; }
 
-       
-        [Required]
-        [Display(Name = "Address Line 1")]
-        public string BillingAddressLine1 { get; set; }
-
-        [Required]
-        [Display(Name = "Address Line 2")]
-        public string BillingAddressLine2 { get; set; }
 
         [Required]
         [Display(Name = "City")]
@@ -56,20 +48,13 @@ namespace TheChesedProject.Models
         public string ShippingState { get; set; }
 
         [Required]
-        [Display(Name = "Zipcode")]
+        [Display(Name = "Zip Code")]
         public string ShippingZipcode { get; set; }
 
         [Required]
         [Display(Name = "Country")]
         public string ShippingCountry { get; set; }
 
-        
-        [Display(Name = "Locale")]
-        public string ShippingLocale { get; set; }
-
-        
-        [Display(Name = "Region")]
-        public string ShippingRegion { get; set; }
 
         [Required]
         [Display(Name = "Name On Card")]
@@ -81,11 +66,11 @@ namespace TheChesedProject.Models
         public string CardNumber { get; set; }
 
         [Required]
-        [Display(Name = "Expiry Month")]
+        [Display(Name = "Expiration Month")]
         public string BillingCardExpirationMonth { get; set; }
 
         [Required]
-        [Display(Name = "Expiry Year")]
+        [Display(Name = "Expiration Year")]
         public string BillingCardExpirationYear { get; set; }
 
         [Required]

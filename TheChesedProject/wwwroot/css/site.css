@@ -50,6 +50,24 @@
     margin-bottom: 23rem;
 }
 
+.mb-6{
+    margin-bottom: 25rem;
+}
+
 .td{
     color: black;
 }
+.cardcolor {
+    color: #01D0E1;   
+}
+
+#hoveroff:hover {
+    color: white;
+    font-weight: bold;
+    background-color: #01D0E1;
+}
+
+.cardTitle {
+    font-size: 135%;
+}
+

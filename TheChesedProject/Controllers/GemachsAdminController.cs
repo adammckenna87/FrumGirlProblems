@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -9,13 +11,16 @@ using TheChesedProject.Models;
 
 namespace TheChesedProject.Controllers
 {
+    //[Authorize(Roles = "Administrator")]
     public class GemachsAdminController : Controller
     {
         private readonly TCPDbContext _context;
+        private readonly IHostingEnvironment _env;
 
-        public GemachsAdminController(TCPDbContext context)
+        public GemachsAdminController(TCPDbContext context, IHostingEnvironment env)
         {
             _context = context;
+            _env = env;
         }
 
         // GET: Gemachs
@@ -48,12 +53,12 @@ namespace TheChesedProject.Controllers
             return View();
         }
 
-        // POST: Gemachs/Create
+        // POST: ProductsAdmin/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Category,Name,Description,Address,Image,PhoneNumber,TimeOpen,TimeClose")] Gemach gemach)
+        public async Task<IActionResult> Create([Bind("ID,Category,Name,Description,City,Community,OwnerFirstName,OwnerLastName,PhoneNumber")] Gemach gemach)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +90,7 @@ namespace TheChesedProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Category,Name,Description,Address,Image,PhoneNumber,TimeOpen,TimeClose")] Gemach gemach)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Category,Name,Description,City,Community,OwnerFirstName,OwnerLastName,PhoneNumber")] Gemach gemach)
         {
             if (id != gemach.ID)
             {

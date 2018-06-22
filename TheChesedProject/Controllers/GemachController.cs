@@ -39,33 +39,13 @@ namespace TheChesedProject.Controllers
             return View(await gemachs.ToListAsync());
         }
 
-        [Authorize]
-        public async Task<IActionResult> AddListing()
-        {
-          
-            return View();
-        }
-
+        
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: ProductsAdmin/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Category,Name,Description,City,Community,OwnerFirstName,OwnerLastName,PhoneNumber")] Gemach gemach)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(gemach);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(gemach);
-        }
+        
 
         public async Task<IActionResult> Details(int? id)
         {
