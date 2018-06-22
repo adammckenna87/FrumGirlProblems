@@ -45,8 +45,9 @@ h5 {
       font-size: 22px; } }
 
 h6 {
-  font-size: 21px;
-  font-weight: 400; }
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.7rem;
+}
 
 p {
   font-size: 15px; }
