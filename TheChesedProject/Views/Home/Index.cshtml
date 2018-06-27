@@ -48,85 +48,7 @@
 <!--// SLIDER -->
 <!--//END HEADER -->
 <!--============================= FIND PLACES =============================-->
-<section class="main-block">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-5">
-                <div class="styled-heading">
-                    <h3>Browse Categories</h3>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-3 category-responsive">
-                <a asp-action="index" asp-controller="gemach" asp-route-category="religious" class="category-wrap">
-                    <div class="category-block" style="border: 3px solid #f34e79;">
-                        <h6>Religious</h6>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-3 category-responsive">
-                <a asp-action="index" asp-controller="gemach" asp-route-category="Medical & Hospital" class="category-wrap">
-                    <div class="category-block" style="border: 3px solid #f34e79;">
-                        <h6>Medical</h6>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-3 category-responsive">
-                <a asp-action="index" asp-controller="gemach" asp-route-category="Financial" class="category-wrap">
-                    <div class="category-block" style="border: 3px solid #f34e79;">
-                        <h6>Financial</h6>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-3 category-responsive">
-                <a asp-action="index" asp-controller="gemach" asp-route-category="Community Services" class="category-wrap">
-                    <div class="category-block" style="border: 3px solid #f34e79;">
-                        <h6>Community</h6>
-                    </div>
-                </a>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-3 category-responsive">
-                <a asp-action="index" asp-controller="gemach" asp-route-category="Baby & Toddler" class="category-wrap">
-                    <div class="category-block" style="border: 3px solid #f34e79;">
-                        <h6>Baby & Toddler</h6>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-3 category-responsive">
-                <a asp-action="index" asp-controller="gemach" asp-route-category="Clothing" class="category-wrap">
-                    <div class="category-block" style="border: 3px solid #f34e79;">
-                        <h6>Clothing</h6>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-3 category-responsive">
-                <a asp-action="index" asp-controller="gemach" asp-route-category="Simcha" class="category-wrap">
-                    <div class="category-block" style="border: 3px solid #f34e79;">
-                
-                        <h6>Simcha</h6>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-3 category-responsive">
-                <a asp-action="index" asp-controller="gemach" asp-route-category="Miscellaneous" class="category-wrap">
-                    <div class="category-block" style="border: 3px solid #f34e79;">
-                        <h6>Miscellaneous</h6>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </div>
-</section>
-<hr />
-
-<!--//END CATEGORIES -->
 <!--============================= FIND PLACES =============================-->
 
 <div class="styled-heading mt-6">
@@ -214,8 +136,8 @@
         </div>
         <div class="row justify-content-center">
             <div class="col-md-4">
-                <div class="featured-btn-wrap">
-                    <a asp-controller="Account" asp-action="Register" method="get" class="btn btn-danger"><span class="ti-plus"></span> CREATE ACCOUNT</a>
+                <div id="createaccount" class="featured-btn-wrap">
+                    <a asp-controller="Account" asp-action="Register" method="get"  class="btn btn-warning"><span class="ti-plus"></span> CREATE ACCOUNT</a>
                 </div>
             </div>
         </div>

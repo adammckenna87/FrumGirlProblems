@@ -49,9 +49,16 @@
     margin-top: 10rem;
     margin-bottom: 23rem;
 }
+.my-7 {
+    margin-top: 3rem;
+    margin-bottom: 9rem;
+}
 
 .mb-6{
-    margin-bottom: 25rem;
+    margin-bottom: 20rem;
+}
+.mb-6a {
+    margin-bottom: 8rem;
 }
 
 .td{
@@ -71,3 +78,11 @@
     font-size: 135%;
 }
 
+#createaccount{
+    height: 3.5rem;
+   
+}
+
+.categorybg{
+    background-color: white;
+}

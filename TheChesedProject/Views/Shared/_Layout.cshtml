@@ -39,24 +39,25 @@
                 <div class="row">
                     <div class="col-md-12">
                         <nav class="navbar navbar-expand-lg navbar-light">
-                           <!--  <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">The Chesed Project</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="icon-menu"></span>
-      </button>-->
+                            <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand"><img src="~/images/TheChesedProjectLogo.png" alt="logo" width="80" height="40" /></a>
+                            <!--button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="icon-menu"></span>
+    </button>-->
                             <div class="collapse navbar-collapse justify-content-center" id="navbarNavDropdown">
                                 <ul class="navbar-nav">
                                     <li class="nav-item active">
                                         <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home <span class="sr-only">(current)</span></a>
                                     </li>
+                                    <li class="nav-item active">
+                                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About <span class="sr-only">(current)</span></a>
+                                    </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" asp-controller="Gemach" asp-action="Index">Gemach Directory</a>
+                                        <a class="nav-link" asp-controller="Gemach" asp-action="Index">Chesed Directory</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" asp-controller="Product" asp-action="Index">Shop</a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" asp-area="" asp-controller="Cart" asp-action="Index"><span id="cartBadge" class="badge badge-primary">0</span>Cart</a>
-                                    </li>
+
                                     @if (!User.Identity.IsAuthenticated)
     {
                                 <li class="nav-item">
@@ -76,8 +77,14 @@ else
 }
 
                                 </ul>
+
+
+
                             </div>
+                            <a class="nav-link align-items-end" style="color: white;" asp-area="" asp-controller="Cart" asp-action="Index"><span id="cartBadge" class="badge badge-warning">0</span>Cart</a>
+
                         </nav>
+
                     </div>
                 </div>
             </div>

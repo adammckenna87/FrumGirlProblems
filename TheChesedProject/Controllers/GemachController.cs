@@ -13,7 +13,7 @@ namespace TheChesedProject.Controllers
     public class GemachController : Controller
     {
 
-        private readonly TCPDbContext _context;
+        TCPDbContext _context;
         private SignInManager<TCPUser> _signInManager;
 
         public GemachController(TCPDbContext context, SignInManager<TCPUser> signInManager)
@@ -24,7 +24,7 @@ namespace TheChesedProject.Controllers
 
         }
 
-        public async Task<IActionResult> Index(string category, string city)
+        public async Task<IActionResult> FullList(string category, string city)
         {
             IQueryable<Gemach> gemachs = _context.Gemachs;
             if (!string.IsNullOrEmpty(category))
@@ -35,8 +35,17 @@ namespace TheChesedProject.Controllers
             {
                 gemachs = gemachs.Where(x => x.City == city);
             }
-          
+
             return View(await gemachs.ToListAsync());
+        }
+
+
+        public async Task<IActionResult> Index(string category, string city)
+        {
+            ViewData["Categories"] = await _context.Gemachs.Select(x => x.Category).Distinct().ToArrayAsync();
+            ViewData["Cities"] = await _context.Gemachs.Select(x => x.City).Distinct().ToArrayAsync();
+            return View();
+           
         }
 
         

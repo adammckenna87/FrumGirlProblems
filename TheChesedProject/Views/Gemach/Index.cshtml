@@ -1,41 +1,237 @@
-﻿@model IEnumerable<TheChesedProject.Models.Gemach>
-
+﻿
 @{
     ViewData["Title"] = "Index";
 }
 
 
-<div class="container">
-    <h2 class="mt-6 mb-4">Showing @Model.Count() Gemachs, @string.Join(",", Model.Select(x => x.City).Distinct())</h2>
-
-    
-
-    <div class="row">
-        @foreach (var group in Model.GroupBy(x => x.Category))
-        {
-
-            <div class="container">
-                <h4>@group.Key</h4>
-            </div>
-            @foreach (var gemach in group)
-            {
-            <a  style="text-decoration: none;" class="cardcolor" asp-action="Details" asp-route-id="@gemach.ID" asp-controller="Gemach">
-                <div id="hoveroff" class="cardcolor card border-warning m-4" style="width: 18rem; height: 17rem;">
-                    <div class="cardcolor card-header bg-warning"></div>
-                    <div class="card-body">
-                        <p class="card-text cardTitle">@gemach.Name</p>
-                        <p class="card-text cardTitle">@gemach.Description</p>
-                        @if ((gemach.OwnerFirstName != null) && (gemach.OwnerLastName != null))
-	{
-                        <p class="card-text">Contact @gemach.OwnerFirstName @gemach.OwnerLastName</p>
-	}
-                        
-                        <!-- <p class="card-text">@gemach.PhoneNumber</p>-->
+<section class="slider d-flex align-items-end">
+    <!-- <img src="images/slider.jpg" class="img-fluid" alt="#"> -->
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-12">
+                <div class="slider-title_box">
+                    <div class="row">
+                        <p></p>
                     </div>
+                   
+                    <div class="container">
+                        <form class="form-wrap mt-5" asp-controller="Gemach" asp-action="Index" method="get">
+                            <div class="btn-group justify-content-center" role="group" aria-label="Basic  example">
+
+
+                                <select id="cityName" class="custom-select custom-select-lg mb-3" name="city" style="width:23rem;">
+                                    <option value="" selected>Choose a City</option>
+                                    @foreach (string city in ((string[])ViewData["Cities"]))
+                {
+                    <option value="@city">@city</option>
+
+}
+
+                                </select>
+
+                            </div>
+                        </form>
+                        <div class="row d-flex justify-content-around my-7">
+                            <div class="col-md-3 category-responsive">
+                                <a href="#browse1" class="category-wrap">
+                                    <div class="category-block categorybg" style="width: 18rem; height: 9rem;">
+                                        <h6 style="font-weight:700; vertical-align: middle;">Gemachs</h6>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-3 category-responsive">
+                                <a href="#browse2" class="category-wrap">
+                                    <div class="category-block categorybg" style="width: 18rem; height: 9rem;">
+                                        <h6 font-weight:700;">Community Services</h6>
+                                    </div>
+                                </a>
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+
                 </div>
-            </a>
-            }
-        }
+            </div>
+        </div>
     </div>
-</div>
-  
+</section>
+<section id="browse1" class="main-block">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <div class="styled-heading">
+                    <h3>Browse Categories in Gemachs</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 category-responsive">
+                <a asp-action="fulllist" asp-controller="gemach" asp-route-category="religious" class="category-wrap">
+                    <div class="category-block">
+                        <h6>Religious</h6>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 category-responsive">
+                <a asp-action="fulllist" asp-controller="gemach" asp-route-category="Medical" class="category-wrap">
+                    <div class="category-block">
+                        <h6>Medical</h6>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 category-responsive">
+                <a asp-action="index" asp-controller="gemach" asp-route-category="Financial" class="category-wrap">
+                    <div class="category-block">
+                        <h6>Financial</h6>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 category-responsive">
+                <a asp-action="fulllist" asp-controller="gemach" asp-route-category="Appliances" class="category-wrap">
+                    <div class="category-block">
+                        <h6>Appliances</h6>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3 category-responsive">
+                <a asp-action="fulllist" asp-controller="gemach" asp-route-category="Baby & Toddler" class="category-wrap">
+                    <div class="category-block">
+                        <h6>Baby & Toddler</h6>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 category-responsive">
+                <a asp-action="fulllist" asp-controller="gemach" asp-route-category="Clothing" class="category-wrap">
+                    <div class="category-block">
+                        <h6>Clothing</h6>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 category-responsive">
+                <a asp-action="index" asp-controller="gemach" asp-route-category="Simcha" class="category-wrap">
+                    <div class="category-block">
+
+                        <h6>Simcha</h6>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 category-responsive">
+                <a asp-action="fulllist" asp-controller="gemach" asp-route-category="Miscellaneous" class="category-wrap">
+                    <div class="category-block">
+                        <h6>Miscellaneous</h6>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-3 category-responsive ">
+                <a asp-action="fulllist" asp-controller="gemach" class="category-wrap">
+                    <div class="category-block">
+                        <h6>View All</h6>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+<hr />
+
+<!--//END CATEGORIES -->
+
+<section id="browse2" class="main-block">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <div class="styled-heading">
+                    <h3>Browse Categories in Community</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 category-responsive">
+                <a asp-action="index" asp-controller="gemach" asp-route-category="religious" class="category-wrap">
+                    <div class="category-block">
+                        <h6>Religious</h6>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 category-responsive">
+                <a asp-action="index" asp-controller="gemach" asp-route-category="Medical" class="category-wrap">
+                    <div class="category-block">
+                        <h6>Medical</h6>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 category-responsive">
+                <a asp-action="index" asp-controller="gemach" asp-route-category="Financial" class="category-wrap">
+                    <div class="category-block">
+                        <h6>Financial</h6>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 category-responsive">
+                <a asp-action="index" asp-controller="gemach" asp-route-category="Appliances" class="category-wrap">
+                    <div class="category-block">
+                        <h6>Appliances</h6>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3 category-responsive">
+                <a asp-action="index" asp-controller="gemach" asp-route-category="Baby & Toddler" class="category-wrap">
+                    <div class="category-block">
+                        <h6>Baby & Toddler</h6>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 category-responsive">
+                <a asp-action="index" asp-controller="gemach" asp-route-category="Clothing" class="category-wrap">
+                    <div class="category-block">
+                        <h6>Clothing</h6>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 category-responsive">
+                <a asp-action="index" asp-controller="gemach" asp-route-category="Simcha" class="category-wrap">
+                    <div class="category-block">
+
+                        <h6>Simcha</h6>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 category-responsive">
+                <a asp-action="index" asp-controller="gemach" asp-route-category="Miscellaneous" class="category-wrap">
+                    <div class="category-block">
+                        <h6>Miscellaneous</h6>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-3 category-responsive ">
+                <a asp-action="fulllist" asp-controller="gemach" class="category-wrap">
+                    <div class="category-block">
+                        <h6>View All</h6>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+<hr />
+
+<!--//END CATEGORIES -->

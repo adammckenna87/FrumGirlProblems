@@ -533,7 +533,7 @@ p {
 }
 
 .category-wrap:hover .category-block {
-    background: #f34e79;
+    background: #FFCE67;
     transition: 0.3s;
 }
 
@@ -551,12 +551,13 @@ p {
 .category-block {
     margin: 0 auto;
     text-align: center;
-    border: 1px solid #f34e79;
+    border: 3px solid #FFCE67;
     padding: 30px;
     margin: 0 0 30px;
 
     h6 {
-        color: #3e434b;
+        font-weight: 700;
+        color: #01D0E1;
         margin: 10px 0 0;
     }
 }
