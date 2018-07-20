@@ -15,7 +15,7 @@
                     </div>
                     <div class="row d-flex justify-content-center my-6">
                         <div class="col-md-10">
-                            <form class="form-wrap mt-4" asp-controller="Gemach" asp-action="Index" method="get">
+                            @*<form class="form-wrap mt-4" asp-controller="Gemach" asp-action="Index" method="get">
                                 <div class="btn-group" role="group" aria-label="Basic  example">
                                     <select id="categoryName" class="custom-select custom-select-lg mb-3" name="category">
                                         <option value="" selected>What Are You Looking for?</option>
@@ -37,7 +37,7 @@
                                     </select>
                                     <input id="selectInput" type="submit" class="btn btn-warning" style="height: 3rem; width: 35rem;" value="Search" />
                                 </div>
-                            </form>
+                            </form>*@
                         </div>
                     </div>
                 </div>
@@ -59,7 +59,7 @@
         <div class="col-sm">
             <a href="#">
                 <figure class="figure effect-selena">
-                    <img src="~/images/resources.jpg" class="figure-img img-fluid rounded" alt="A generic square placeholder image with rounded corners in a figure.">
+                    <img src="~/images/malte-wingen-382149-unsplash.jpg" class="figure-img img-fluid rounded" alt="A generic square placeholder image with rounded corners in a figure.">
                     <figcaption class="figure-caption">
                         <h6>Articles & Audio/Video <span>Shiurim</span></h6>
                         <p>Discover what the Torah has to say about Chesed </p>
@@ -70,16 +70,16 @@
         <div class="col-sm">
             <a href="#">
                 <figure class="figure effect-selena">
-                    <img src="~/images/science.jpg" class="figure-img img-fluid rounded" alt="A generic square placeholder image with rounded corners in a figure.">
-                    <figcaption class="figure-caption"><h6>The Science of Kindness</h6><p>Explore why kindness is good for you</p></figcaption>
+                    <img src="~/images/oldschoolmedia.jpg" class="figure-img img-fluid rounded" alt="A generic square placeholder image with rounded corners in a figure.">
+                    <figcaption class="figure-caption"><h6>Inspiring Videos</h6><p>Get a boost and cry some happy tears!</p></figcaption>
                 </figure>
             </a>
         </div>
         <div class="col-sm">
             <a href="#">
                 <figure class="figure effect-selena">
-                    <img src="~/images/hearthands.jpg" class="figure-img img-fluid rounded" alt="A generic square placeholder image with rounded corners in a figure.">
-                    <figcaption class="figure-caption"><h6>Inspiring Videos</h6><p>Get a boost and cry some happy tears!</p></figcaption>
+                    <img src="~/images/nikunj-gupta-224168-unsplash.jpg" class="figure-img img-fluid rounded" alt="A generic square placeholder image with rounded corners in a figure.">
+                    <figcaption class="figure-caption"><h6>The Science of Kindness</h6><p>Explore why kindness is good for you</p></figcaption>
                 </figure>
             </a>
         </div>
@@ -98,7 +98,7 @@
         <div class="col-sm">
             <a href="#">
                 <figure class="figure effect-selena">
-                    <img src="~/images/kindnessismagic.jpg" class="figure-img img-fluid rounded" alt="A generic square placeholder image with rounded corners in a figure." />
+                    <img src="~/images/art-bright-celebration-900102.jpg" class="figure-img img-fluid rounded" alt="A generic square placeholder image with rounded corners in a figure." />
                     <figcaption class="figure-caption">
                         <h6>Kindness Ideas</h6>
                         <p>Get creative and find ways to be kind throughout your day!</p>
@@ -122,8 +122,6 @@
 
 </div>
 
-
-<!--============================= ADD LISTING =============================-->
 <section class="main-block light-bg">
     <div class="container">
         <div class="row">
@@ -137,12 +135,14 @@
         <div class="row justify-content-center">
             <div class="col-md-4">
                 <div id="createaccount" class="featured-btn-wrap">
-                    <a asp-controller="Account" asp-action="Register" method="get"  class="btn btn-warning"><span class="ti-plus"></span> CREATE ACCOUNT</a>
+                    <a asp-controller="Account" asp-action="Register" method="get" class="btn btn-warning"><span class="ti-plus"></span> CREATE ACCOUNT</a>
                 </div>
             </div>
         </div>
     </div>
 </section>
+<!--============================= ADD LISTING =============================-->
+
 <!--//END ADD LISTING -->
 @section Scripts{
     <script type="text/javascript">

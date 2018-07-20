@@ -15,7 +15,7 @@
                     </div>
                    
                     <div class="container">
-                        <form class="form-wrap mt-5" asp-controller="Gemach" asp-action="Index" method="get">
+                        @*<form class="form-wrap mt-5" asp-controller="Gemach" asp-action="Index" method="get">
                             <div class="btn-group justify-content-center" role="group" aria-label="Basic  example">
 
 
@@ -30,7 +30,7 @@
                                 </select>
 
                             </div>
-                        </form>
+                        </form>*@
                         <div class="row d-flex justify-content-around my-7">
                             <div class="col-md-3 category-responsive">
                                 <a href="#browse1" class="category-wrap">
@@ -63,7 +63,7 @@
         <div class="row justify-content-center">
             <div class="col-md-5">
                 <div class="styled-heading">
-                    <h3>Browse Categories in Gemachs</h3>
+                    <h3 style="color:darkslategray;">Browse Categories in Gemachs</h3>
                 </div>
             </div>
         </div>
@@ -86,7 +86,7 @@
                 </a>
             </div>
             <div class="col-md-3 category-responsive">
-                <a asp-action="index" asp-controller="gemach" asp-route-category="Financial" class="category-wrap">
+                <a asp-action="fulllist" asp-controller="gemach" asp-route-category="Financial" class="category-wrap">
                     <div class="category-block">
                         <h6>Financial</h6>
                     </div>
@@ -117,7 +117,7 @@
                 </a>
             </div>
             <div class="col-md-3 category-responsive">
-                <a asp-action="index" asp-controller="gemach" asp-route-category="Simcha" class="category-wrap">
+                <a asp-action="fulllist" asp-controller="gemach" asp-route-category="Simcha" class="category-wrap">
                     <div class="category-block">
 
                         <h6>Simcha</h6>
@@ -152,7 +152,7 @@
         <div class="row justify-content-center">
             <div class="col-md-5">
                 <div class="styled-heading">
-                    <h3>Browse Categories in Community</h3>
+                    <h3 style="color:darkslategray;">Browse Categories in Community</h3>
                 </div>
             </div>
         </div>

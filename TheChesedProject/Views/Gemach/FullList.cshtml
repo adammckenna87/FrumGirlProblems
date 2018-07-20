@@ -11,31 +11,55 @@
 
     <div class="row">
         @foreach (var group in Model.GroupBy(x => x.Category))
-        {
+    {
 
-            <div class="container">
-                <h4>@group.Key</h4>
-            </div>
-            @foreach (var gemach in group)
-            {
+        <div class="container">
+            <h4>@group.Key</h4>
+        </div>
+        @foreach (var gemach in group)
+    {
+        <div class="col-sm-6 col-lg-12 col-xl-6 featured-responsive">
+            <div class="featured-place-wrap" style="border-color: #01D0E1; border-width: 2px;">
                 <a style="text-decoration: none;" class="cardcolor" asp-action="Details" asp-route-id="@gemach.ID" asp-controller="Gemach">
-                    <div id="hoveroff" class="cardcolor card border-warning m-4" style="width: 18rem; height: 17rem;">
-                        <div class="cardcolor card-header bg-warning"></div>
-                        <div class="card-body">
-                            <p class="card-text cardTitle">@gemach.Name</p>
-                            <p class="card-text cardTitle">@gemach.Description</p>
-                            @if ((gemach.OwnerFirstName != null) && (gemach.OwnerLastName != null))
-                            {
-                                <p class="card-text">Contact @gemach.OwnerFirstName @gemach.OwnerLastName</p>
-                            }
-
-                            <!-- <p class="card-text">@gemach.PhoneNumber</p>-->
-                        </div>
+                    
+                    <div class="featured-title-box">
+                        <!--<h5>@gemach.Category</h5>-->
+                        <h4><b>@gemach.Name</b></h4>
+                        <h5>@gemach.Description </h5>
+                        <ul>
+                            <li>
+                                <span class="icon-location-pin"></span>
+                                @if (gemach.Community != null)
+            {
+                    <p>@gemach.Community</p>
+}
+                                <p>@gemach.City</p>
+                            </li>
+                            <li>
+                                <span class="icon-screen-smartphone"></span>
+                                <p>@gemach.PhoneNumber</p>
+                            </li>
+                            <li>
+                                <span class="icon-link"></span>
+                                @if ((gemach.OwnerFirstName != null) && (gemach.OwnerLastName != null))
+            {
+                    <p class="card-text">Contact @gemach.OwnerFirstName @gemach.OwnerLastName</p>
+}
+                            </li>
+                        </ul>
                     </div>
                 </a>
-            }
-        }
+            </div>
+        </div>
+}
+}
+
+
+        
+
+
+
     </div>
-</div>
+        </div>
 
 

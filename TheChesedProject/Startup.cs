@@ -13,7 +13,7 @@ using TheChesedProject.Models;
 using SendGrid;
 using Newtonsoft.Json.Serialization;
 using Braintree;
-
+using System.Globalization;
 
 namespace TheChesedProject
 {
@@ -125,7 +125,7 @@ namespace TheChesedProject
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
             DbInitializer.Initialize(db);
-
+            
         }
     }
 }

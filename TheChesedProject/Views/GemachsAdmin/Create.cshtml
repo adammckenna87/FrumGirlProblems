@@ -4,13 +4,22 @@
 }
 
 <div class="container mt-6" style="color: black;">
-    <h2>Add Your Gemach or Organization</h2>
+    <h2>Add Your Gemach or Community Service</h2>
 
     <hr />
     <div class="row">
         <div class="col-md-4">
             <form method="post" asp-action="Create" asp-controller="GemachsAdmin">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group"> 
+                    <label>What type of listing do you have?</label>
+                    <select class="form-control">
+                        <option value="Gemach">Gemach</option>
+                        <option value="CommunityService">Community Service</option>
+                    </select>
+                    <span class="text-danger"></span>
+                </div>
+                
                 <div class="form-group">
                     <label asp-for="Category" class="control-label"></label>
                     <input asp-for="Category" class="form-control" />

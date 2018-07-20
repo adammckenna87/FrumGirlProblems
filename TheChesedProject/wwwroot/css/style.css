@@ -161,9 +161,10 @@ p {
   padding: 0 8px 0 0; }
 
 .slider {
-  background: url(../images/blueskieslogo2.jpg) no-repeat;
-  background-size: cover;
-  min-height: 800px; }
+    background: url(../images/thechesedprojectfinal.jpg) no-repeat;
+    background-size: cover;
+    min-height: 800px;
+}
   @media (max-width: 992px) {
     .slider {
       min-height: 700px; } }
